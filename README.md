@@ -5,3 +5,5 @@ converts the data from the text files into a pandas dataframe, pickle saves the 
 cleaning the data and applying NMF
 ##location calculation##
 evaluating the topics location distributions
+## `testHashTag`
+If you remove the comments then you can see the list of words after hashtag
