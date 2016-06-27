@@ -3,7 +3,7 @@
 if __name__ == "__main__": # sort of like with MPI, we need this to do multiprocessing on windows
     import pickle
     from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
-    from sklearn.decomposition import NMF, PCA, TruncatedSVD, LatentDirichletAllocation
+    from sklearn.decomposition import NMF #, PCA, TruncatedSVD, LatentDirichletAllocation
     import time
     import re  # regex
 
@@ -50,7 +50,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     # because 2 lines of code is already too much I guess...
 
     print("Dumping feature names to disk...")
-    pickle.dump(tf_idf.get_feature_names(), open('TF_IDF_feature_names.pkl', 'wb'))
+    pickle.dump(tf_idf.get_feature_names(), open('TF_IDF_feature_names_vanc.pkl', 'wb'))
 
 
     print("TF-IDF Sample:")
@@ -61,41 +61,41 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     # and only spit out the values and their indexes. Its 1D so the first index
     # will always be 0
 
-    # These two are basically interchangable: (Go take a nap while they run...)
-    # topic_model = NMF(n_components=1000,verbose=1,tol=.001,alpha=.1,l1_ratio=.2)
-    topic_model = NMF(n_components=100,verbose=1, tol=0.001) # Sure lets compress to 100 topics why not...
-# Verbose prints out how close to convergence we are after each iteration
-# When violation is less than .0001 by default, NMF is finished
-
-    # for LDA:
-    # n_jobs=-1 means run on every logical core
-    # doc_topic prior and topic_word prior are alpha and beta terms respectively
-    # LatentDirichletAllocation runs in online mode by default, just make sure batch_size is small enough to fit in RAM
-    # Learning offset is how much to reduce importance of early batches - higher values mean early batches have less weight (early batches tend to dominate in online training of LDA)
-
-
-    # for NMF:
-    # alpha is how much to regularize
-    # l1 ratio is how much alpha to allocate to l1 vs l2 regularization (microblogs paper did both so we do too)
-    # tol is how small violation must be for NMF to stop iterating.
-    # I set it higher than default so it doesn't take as long to run. Smaller is usually better though
-    # Sure lets compress to 100 topics why not
-    # Verbose prints out how close to convergence we are after each iteration
-    # When violation is less than .0001 by default, NMF is finished (set to .001 now)
-
-    text_topic_model_W = topic_model.fit_transform(text_tf_idf) # NMF's .transform() returns W by
-    # default, but we can get H as follows:
-    text_topic_model_H = topic_model.components_
-    print("Topic Model Components:")
-    print(text_topic_model_W[0]) # topic memberships of tweet 0
-    print(len(text_topic_model_H[0]))
-    print(text_topic_model_H[0]) # this is relative word frequencies within topic 0.
-    # Maybe. We might need to to transpose this...
-
-    text_topic_model_WH = (text_topic_model_W,text_topic_model_H)
-
-    pickle.dump(text_topic_model_WH, open('NMF_100_topics_vanc_WH.pkl','wb'), protocol=4) # Save it to
-    pickle.dump(topic_model, open('NMF_vanc.pkl','wb'), protocol=4)
-    # disk so we don't have to keep recalculating it later
-
-    print("\n--- Completed in %s seconds! ---" % (time.time() - start_time))
+#     # These two are basically interchangable: (Go take a nap while they run...)
+#     # topic_model = NMF(n_components=1000,verbose=1,tol=.001,alpha=.1,l1_ratio=.2)
+#     topic_model = NMF(n_components=100,verbose=1, tol=0.001) # Sure lets compress to 100 topics why not...
+# # Verbose prints out how close to convergence we are after each iteration
+# # When violation is less than .0001 by default, NMF is finished
+#
+#     # for LDA:
+#     # n_jobs=-1 means run on every logical core
+#     # doc_topic prior and topic_word prior are alpha and beta terms respectively
+#     # LatentDirichletAllocation runs in online mode by default, just make sure batch_size is small enough to fit in RAM
+#     # Learning offset is how much to reduce importance of early batches - higher values mean early batches have less weight (early batches tend to dominate in online training of LDA)
+#
+#
+#     # for NMF:
+#     # alpha is how much to regularize
+#     # l1 ratio is how much alpha to allocate to l1 vs l2 regularization (microblogs paper did both so we do too)
+#     # tol is how small violation must be for NMF to stop iterating.
+#     # I set it higher than default so it doesn't take as long to run. Smaller is usually better though
+#     # Sure lets compress to 100 topics why not
+#     # Verbose prints out how close to convergence we are after each iteration
+#     # When violation is less than .0001 by default, NMF is finished (set to .001 now)
+#
+#     text_topic_model_W = topic_model.fit_transform(text_tf_idf) # NMF's .transform() returns W by
+#     # default, but we can get H as follows:
+#     text_topic_model_H = topic_model.components_
+#     print("Topic Model Components:")
+#     print(text_topic_model_W[0]) # topic memberships of tweet 0
+#     print(len(text_topic_model_H[0]))
+#     print(text_topic_model_H[0]) # this is relative word frequencies within topic 0.
+#     # Maybe. We might need to to transpose this...
+#
+#     text_topic_model_WH = (text_topic_model_W,text_topic_model_H)
+#
+#     pickle.dump(text_topic_model_WH, open('NMF_100_topics_vanc_WH.pkl','wb'), protocol=4) # Save it to
+#     pickle.dump(topic_model, open('NMF_vanc.pkl','wb'), protocol=4)
+#     # disk so we don't have to keep recalculating it later
+#
+#     print("\n--- Completed in %s seconds! ---" % (time.time() - start_time))

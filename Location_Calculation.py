@@ -3,19 +3,21 @@ import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 
-(W, H) = pickle.load(open('NMF_100_topics_vanc_WH.pkl','rb'))
-names = np.array(pickle.load(open('TF_IDF_feature_names.pkl','rb')))
+(W, H) = pickle.load(open('NMF_500_topics_barc10_WH.pkl','rb'))
+#names = np.array(pickle.load(open('TF_IDF_feature_names_barc.pkl','rb')))
 print(W.shape)
 print(H.shape)
-NT = 100 #number of topics
-Spatial = pickle.load(open('pandas_data_vanc.pkl','rb'))
+NT = 500 #number of topics
+Spatial = pickle.load(open('pandas_data_barc.pkl','rb'))
+Spatial = Spatial[Spatial["gps_precision"] == 10.0]
 Topics = W.argmax(axis=1)#Assigns a topic to each tweet
 Spatial["topics"] = Topics#data frame containing the valuable columns from raw data
-#Spatial = Spatial[Spatial["latitude"]>41]#removed one outlier with very low lattitude
+Spatial = Spatial[Spatial["latitude"]>41]#removed one outlier with very low lattitude
+Spatial = Spatial[Spatial["latitude"]>1.97]#removed one outlier with very low lattitude
 maxlat = Spatial["latitude"].max()
-minlat = Spatial["latitude"].min()
+minlat = Spatial["latitude"].min()#41.2638
 maxlong = Spatial["longitude"].max()
-minlong = Spatial["longitude"].min()
+minlong = Spatial["longitude"].min()# 1.97351
 print(maxlat, minlat)
 print(maxlong, minlong)
 Spatial["latitude"] = (Spatial["latitude"]-minlat)/(maxlat-minlat)#we normalize the latatitudal and longitudal data of the tweets to be between 0 and 1

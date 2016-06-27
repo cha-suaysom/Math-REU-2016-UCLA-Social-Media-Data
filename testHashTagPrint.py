@@ -23,9 +23,9 @@ for name in raw_data['user']:
 
 i = 0
 for index,row in raw_data.iterrows():
-    i = i+1
-    if (i >= 500000):
-        break
+    # i = i+1
+    # if (i >= 500000):
+    #     break
     userName = row["user"]
     #print(userName)
     sentence = row["text"]
@@ -34,7 +34,7 @@ for index,row in raw_data.iterrows():
         for word in sentence.split():
             if(word[0] == '@'):
                 if (word[1:] in tagDict): #(word in tagDict):
-                    print(word)
+                    #print(word)
                     tagDict[word[1:]].append(userName)
 #Who got tagged the most
 
