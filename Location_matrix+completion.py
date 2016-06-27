@@ -28,10 +28,13 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
             B = sps.csr_matrix(A.reshape((1,rows*cols)))
             #print(B)
             vector_list.append(B)
+    A = np.zeros((1,rows*cols))
+    vector_list.append(A)
     #print(vector_list[0])
     Spatial = pickle.load(open('pandas_data_barc.pkl','rb'))
     Spatial = Spatial[Spatial["gps_precision"] == 10.0]
-    Spatial= Spatial.sample(frac = 0.5) ###Sample traning data
+    Spatial_sample = Spatial.sample(frac = 0.5) ###Sample traning data
+
     #Spatial = Spatial.head(500)
     maxlat = 41.390205 + 2
     minlat = 41.390205 -2

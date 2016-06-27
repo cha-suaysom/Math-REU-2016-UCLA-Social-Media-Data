@@ -63,7 +63,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
 
     # These two are basically interchangable: (Go take a nap while they run...)
     # topic_model = NMF(n_components=1000,verbose=1,tol=.001,alpha=.1,l1_ratio=.2)
-    topic_model = NMF(n_components=100,verbose=1, tol=0.001) # Sure lets compress to 100 topics why not...
+    topic_model = NMF(n_components=500,verbose=1, tol=0.001) # Sure lets compress to 100 topics why not...
 # Verbose prints out how close to convergence we are after each iteration
 # When violation is less than .0001 by default, NMF is finished
 
@@ -99,7 +99,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     Time = raw_text["time"]
     raw_text["date"] = pd.to_datetime(Time, infer_datetime_format= True)
 
-    pickle.dump(text_topic_model_WH, open('NMF_100_topics_vanc_WH.pkl','wb'), protocol=4) # Save it to
+    pickle.dump(text_topic_model_WH, open('LoNMF_100_topics_vanc_WH.pkl','wb'), protocol=4) # Save it to
     pickle.dump(topic_model, open('NMF_vanc.pkl','wb'), protocol=4)
     pickle.dump(raw_text, open('pandas_data_vanc_withtopics.pkl','wb'), protocol = 4)
 

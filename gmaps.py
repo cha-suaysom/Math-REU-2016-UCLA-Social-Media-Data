@@ -8,14 +8,10 @@ import pandas as pd
 # you have to do this in the directory where the module gets installed
 # on my system it goes to /Users/davidnola/anaconda/lib/python3.5/site-packages/gmplot
 
-(W, H) = pickle.load(open('NMF_500_topics_barc10_WH.pkl','rb'))
-df = pickle.load(open('pandas_data_barc.pkl','rb'))
-df = df[df['gps_precision']==10.0]
-topics = np.argmax(W,axis=1)
-df['topic']=topics
-N = 7
+df = pickle.load(open('Location_pandas_data_barc.pkl','rb'))
+N = 63
 # t1 = df[df['topic']==15]
-t1 = df[df['topic']==N]
+t1 = df[df['topics']==N]
 t1 = t1[t1['gps_precision']==10.0]
 
 print(t1.head())
@@ -28,7 +24,7 @@ longs = t1['longitude'].tolist()
 print(len(lats))
 
 gmap.heatmap(lats, longs,dissipating=True,radius=40)
-mymap = "mymap_vanc"+ str(N)+".html"
+mymap = "mymap_barc"+ str(N)+".html"
 gmap.draw(mymap)
 
 #print(topics[:10])

@@ -1,14 +1,14 @@
 import pickle
 import numpy as np
 
-(W, H) = pickle.load(open('NMF_100_topics_vanc_WH.pkl','rb'))
+(W, H) = pickle.load(open('Location_NMF_100_topics_barc_WH.pkl','rb'))
 names = np.array(pickle.load(open('TF_IDF_feature_names.pkl','rb')))
 
 print(H.shape)
-print(names[:100])
+print(names[:500])
 print(H[:20,:20])
-
-sorted = [list(names[np.argsort(x)[-10:]][::-1]) for x in H] # get the indices of the 10 highest values in each topic in H, then get the corresponding words for these values
+H1 = H[:,:20710]
+sorted = [list(names[np.argsort(x)[-10:]][::-1]) for x in H1] # get the indices of the 10 highest values in each topic in H, then get the corresponding words for these values
 for idx, s in enumerate(sorted):
     print(idx,s)
 
