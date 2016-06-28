@@ -151,5 +151,5 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     # disk so we don't have to keep recalculating it later
 
 ############# Get the nontraining tweets ####################
-rest_of_tweets= Spatial_full[Spatial_full.index.isin((Spatial.index).tolist())] # selects the tweets not in the sample
+rest_of_tweets= Spatial_full[~Spatial_full.index.isin((Spatial.index).tolist())] # selects the tweets not in the sample
 pickle.dump(rest_of_tweets, open('rest_of_tweets_pandas_data_barc.pkl', 'wb'))

@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a921ddc1-bb1f-4488-8e3a-641b00293406" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Location_matrix+completion.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TF_IDF_feature_names.pkl" afterPath="$PROJECT_DIR$/TF_IDF_feature_names.pkl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Location Matrix.py" afterPath="$PROJECT_DIR$/Location Matrix.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Location_Calculation.py" afterPath="$PROJECT_DIR$/Location_Calculation.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generate_topics.py" afterPath="$PROJECT_DIR$/generate_topics.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gmaps.py" afterPath="$PROJECT_DIR$/gmaps.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/preprocessor_clean_withtopics.py" afterPath="$PROJECT_DIR$/preprocessor_clean_withtopics.py" />
     </list>
     <ignored path="Math-REU-2016-UCLA-Social-Media-Data.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -55,8 +49,8 @@
       <file leaf-file-name="Location_Calculation.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Location_Calculation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+            <state relative-caret-position="374">
+              <caret line="82" column="78" selection-start-line="82" selection-start-column="78" selection-end-line="82" selection-end-column="78" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -113,8 +107,8 @@
       <file leaf-file-name="Location Matrix.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Location Matrix.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-171">
-              <caret line="113" column="69" selection-start-line="113" selection-start-column="69" selection-end-line="113" selection-end-column="69" />
+            <state relative-caret-position="423">
+              <caret line="154" column="40" selection-start-line="154" selection-start-column="40" selection-end-line="154" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -162,11 +156,11 @@
         <option value="$PROJECT_DIR$/LocationSampling.py" />
         <option value="$PROJECT_DIR$/Preprocessor_clean_for_MATLAB.py" />
         <option value="$USER_HOME$/Anaconda3/Lib/site-packages/scipy/io/matlab/Location matrix.py" />
-        <option value="$PROJECT_DIR$/Location_Calculation.py" />
         <option value="$PROJECT_DIR$/preprocessor_clean_withtopics.py" />
         <option value="$PROJECT_DIR$/generate_topics.py" />
         <option value="$PROJECT_DIR$/Location_matrix+completion.py" />
         <option value="$PROJECT_DIR$/gmaps.py" />
+        <option value="$PROJECT_DIR$/Location_Calculation.py" />
         <option value="$PROJECT_DIR$/Location Matrix.py" />
       </list>
     </option>
@@ -228,7 +222,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1149" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
   </component>
-  <component name="RunManager" selected="Python.gmaps">
+  <component name="RunManager" selected="Python.generate_topics">
     <configuration default="false" name="Location_Calculation" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -457,10 +451,10 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.gmaps" />
-        <item index="1" class="java.lang.String" itemvalue="Python.generate_topics" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Location_Calculation" />
-        <item index="3" class="java.lang.String" itemvalue="Python.Location Matrix" />
+        <item index="0" class="java.lang.String" itemvalue="Python.generate_topics" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Location_Calculation" />
+        <item index="2" class="java.lang.String" itemvalue="Python.Location Matrix" />
+        <item index="3" class="java.lang.String" itemvalue="Python.gmaps" />
         <item index="4" class="java.lang.String" itemvalue="Python.Preprocessor_clean_for_MATLAB" />
       </list>
     </recent_temporary>
@@ -493,7 +487,21 @@
       <option name="project" value="LOCAL" />
       <updated>1467052844577</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Adds location columns to NMF in order to get location senseative topics">
+      <created>1467070382265</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1467070382265</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Adds location columns to NMF in order to get location senseative topics">
+      <created>1467149845571</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1467149845571</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -525,9 +533,9 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32731378" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32731378" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919955" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919955" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19222577" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -852,14 +860,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/scipy/io/matlab/mio.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1210">
-          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/preprocessor_clean.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
@@ -883,26 +883,6 @@
         <state relative-caret-position="-110">
           <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Location_Calculation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/generate_topics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -934,10 +914,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/scipy/io/matlab/mio.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1210">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Location_Calculation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="82" column="78" selection-start-line="82" selection-start-column="78" selection-end-line="82" selection-end-column="78" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/generate_topics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Location Matrix.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-171">
-          <caret line="113" column="69" selection-start-line="113" selection-start-column="69" selection-end-line="113" selection-end-column="69" />
+        <state relative-caret-position="423">
+          <caret line="154" column="40" selection-start-line="154" selection-start-column="40" selection-end-line="154" selection-end-column="40" />
           <folding />
         </state>
       </provider>
