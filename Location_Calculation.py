@@ -2,6 +2,7 @@ import pandas as pd
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
+import math
 
 (W, H) = pickle.load(open('Location_NMF_100_topics_barc_WH.pkl','rb'))
 #names = np.array(pickle.load(open('TF_IDF_feature_names_barc.pkl','rb')))
@@ -78,8 +79,10 @@ df["Entropy"] = EntropyList
 df = df.sort_values(by = "MSD")
 df = df[df["Length"]>0]#removes empty topics
 print(df.head(100))
+print("MSD Mean: " , df["MSD"].mean(),"L one half: ", df["L0.5"].mean())
+print("MSD Median: " , df["MSD"].median(),"L one half: ", df["L0.5"].median())
 #plt.plot(df["MSD"], df["L0.5"])
-plt.scatter(df["Entropy"], df["L0.5"])
+plt.scatter((df["L0.5"]), df["MSD"])
 plt.xlabel("LP")
 plt.ylabel("MSD")
 plt.title("NMF500 Topics LP vs MSD values")

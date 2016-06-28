@@ -29,9 +29,9 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
             #print(B)
             vector_list.append(B)
     #print(vector_list[0])
-    Spatial = pickle.load(open('pandas_data_barc.pkl','rb'))
-    Spatial = Spatial[Spatial["gps_precision"] == 10.0]
-    Spatial= Spatial.sample(frac = 0.5) ###Sample traning data
+    Spatial_full = pickle.load(open('pandas_data_barc.pkl','rb'))
+    Spatial_full = Spatial_full[Spatial_full["gps_precision"] == 10.0]
+    Spatial= Spatial_full.sample(frac = 0.5) ###Sample traning data
     #Spatial = Spatial.head(500)
     maxlat = 41.390205 + 2
     minlat = 41.390205 -2
@@ -112,19 +112,23 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
 
 
 ############ CONCATENATING LOCATION AND TFIDF MATRICES ##############
-    alpha = 1.0 # Weight of location matrix
+    location_norm = sps.linalg.norm(L, 'fro')
+    text_norm = sps.linalg.norm(text_tf_idf, 'fro')
+    print(location_norm, text_norm, location_norm/text_norm)
+
+    alpha = text_norm/location_norm # Weight of location matrix, normalized so that text and location parts have the same frobinous norm
     L = alpha*L
 
     NMFLOC = sps.hstack((text_tf_idf, L))
     NMFLOC = NMFLOC.tocsr()
     print(NMFLOC.shape)
 
-######### Exporting to MATLAB ######################
-
-    sio.savemat('TFIDF_Location_barcSample05', {'TF_IDF': NMF})
-    X = tf_idf.get_feature_names()
-    sio.savemat('voc_Location_barcSample05', {'TF_IDF_feature_names_barc10sample05' : X})
-
+# ######### Exporting to MATLAB ######################
+#
+#     sio.savemat('TFIDF_Location_barcSample05', {'TF_IDF': NMF})
+#     X = tf_idf.get_feature_names()
+#     sio.savemat('voc_Location_barcSample05', {'TF_IDF_feature_names_barc10sample05' : X})
+######## PYTHON NMF #############
     topic_model = NMF(n_components=100, verbose=1, tol=0.001)  # Sure lets compress to 100 topics why not...
 
     text_topic_model_W = topic_model.fit_transform(NMFLOC) # NMF's .transform() returns W by
@@ -145,3 +149,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     pickle.dump(text_topic_model_WH, open('location_NMF_100_topics_barc_WH.pkl','wb'), protocol=4) # Save it to
     #pickle.dump(topic_model, open('NMF_vanc.pkl','wb'), protocol=4)
     # disk so we don't have to keep recalculating it later
+
+############# Get the nontraining tweets ####################
+rest_of_tweets= Spatial_full[Spatial_full.index.isin((Spatial.index).tolist())] # selects the tweets not in the sample
+pickle.dump(rest_of_tweets, open('rest_of_tweets_pandas_data_barc.pkl', 'wb'))
