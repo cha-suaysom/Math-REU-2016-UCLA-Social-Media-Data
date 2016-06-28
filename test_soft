@@ -5,6 +5,8 @@ import math
 import matplotlib.pyplot as plt
 from numpy import *
 
+
+# load W, H, and the data
 (W, H) = pickle.load(open('NMF_100_topics_vanc_WH.pkl','rb'))
 names = np.array(pickle.load(open('TF_IDF_feature_names.pkl','rb')))
 print(W.shape)
@@ -13,11 +15,14 @@ NT = 100 #number of topics
 Nt = W.shape[0] #number of tweets
 Spatial = pickle.load(open('pandas_data_vanc.pkl','rb'))
 
+# normalize W
 row_sums = W.sum(axis=1)
 W_normal = W / row_sums[:, np.newaxis]
 where_are_NaNs = isnan(W_normal)
 W_normal[where_are_NaNs] = 0
 
+
+# calculate the min and max for latitude and longitude
 maxlat = Spatial["latitude"].max()
 minlat = Spatial["latitude"].min()
 maxlong = Spatial["longitude"].max()
@@ -25,6 +30,7 @@ minlong = Spatial["longitude"].min()
 print(maxlat, minlat)
 print(maxlong, minlong)
 
+# divide the map into 0.01 deg by 0.01 deg grids
 hx = 0.01
 hy = 0.01
 Nx = math.ceil((maxlong - minlong) / hx)
@@ -32,32 +38,21 @@ Ny = math.ceil((maxlat - minlat) / hy)
 print(Nx)
 print(Ny)
 
-#Spatial_precise = Spatial[Spatial["gps_precision"] == 10.0]#taking gonly location accurete tweets
-#
-# distr = []
-# for T in range(0, NT):
-#     pdf = np.zeros((Nx, Ny))
-#     distr.append(pdf)
-# for t in range(0, Nt):
-#     if Spatial.iloc[t]["gps_precision"] == 10:
-#         x = Spatial.iloc[t]["latitude"]
-#         y = Spatial.iloc[t]["longitude"]
-#         x_bin = math.floor((x-minlat)/hx)
-#         y_bin = math.floor((y-minlong)/hy)
-#         for T in range(0, NT):
-#             distr[T][x, y] += W[t, T]
-#             #pdf[math.floor((x-minlat)/hx), math.floor((y-minlong)/hy)] += W[t, T]
-#     print(t)
+# load the distribution over space for each topic
 data = []
 for i in range(0,NT):
     name = 'distr' + str(i) + '.dat'
     test = np.load(name)
     data.append(test)
 
+# keep track of the tweets with spreadout distribution
 
-theta = 110
-bad = []
-LPlist = []
+theta = 110 # the threshold of L^0.5 norm
+bad = []   # list for the spreadout distribution
+LPlist = []  # save the L^0.5 norm  for the distribution of each tweet
+
+
+# calculate the distribution of each tweet
 for t in range(0, Nt):
     x = Spatial.iloc[t]["longitude"]
     y = Spatial.iloc[t]["latitude"]
@@ -65,15 +60,16 @@ for t in range(0, Nt):
     y_bin = math.floor((y - minlat) / hy) - 1
     distribution = np.zeros((Nx, Ny))
     for T in range(0, NT):
-        distribution += (W_normal[t, T] * data[T])
+        distribution += (W_normal[t, T] * data[T]) # Increment the distribution function in the correct grid according to the weight
 
     L_P = ((np.sqrt(distribution)).sum()) ** 2
-    LPlist.append(L_P)
+    LPlist.append(L_P)  # Add the L^0.5 norm of the distribution to the list
     print(L_P)
     if L_P > theta or distribution.sum() < 0.001:
-        bad.append(t)
-print(len(bad) / Nt)
+        bad.append(t)  # If the L^0.5 norm is large, or if the distribution doesn't make sense, don't predict the location
+print(1 - len(bad) / Nt)   # The percentage of the tweets we are predicting the location for  
 pickle.dump(LPlist, open("LPlist.p", "wb"))
+
 ## percentage test
 # count = 0
 # logProb = 0
@@ -101,9 +97,13 @@ pickle.dump(LPlist, open("LPlist.p", "wb"))
 # location estimate
 count = 0
 error = 0
-for t in range(math.ceil(Nt*0.8), Nt):
+p = 0.7  # the percentage of data for training
+# only consider tweets with concentrated distribution
+for t in range(math.ceil(Nt*p), Nt):
     if t not in bad:
         count += 1
+        
+        # calculate the location of the tweet
         x = Spatial.iloc[t]["longitude"]
         y = Spatial.iloc[t]["latitude"]
         x_bin = math.floor((x - minlong) / hx) - 1
@@ -111,12 +111,16 @@ for t in range(math.ceil(Nt*0.8), Nt):
 
         distribution = np.zeros((Nx, Ny))
         for T in range(0, NT):
-            distribution += (W_normal[t, T] * data[T])
+            distribution += (W_normal[t, T] * data[T]) # Calculate the distribution of the tweet
+        # find the bin with highest density function
         indices = np.where(distribution == distribution.max())
         x_bin_predict = indices[0][0]
         y_bin_predict = indices[1][0]
+        
         print(np.absolute(x_bin - x_bin_predict))
         print(np.absolute(y_bin - y_bin_predict))
+        
+        # calculate the distance from the correct bin
         diffX = np.absolute(x_bin - x_bin_predict) * 0.01 * 111 * math.cos(maxlat * math.pi / 180)
         diffY = np.absolute(y_bin - y_bin_predict) * 0.01 * 111
         diff = math.sqrt(diffX**2 + diffY**2)
@@ -124,4 +128,5 @@ for t in range(math.ceil(Nt*0.8), Nt):
 
 print(error)
 print(count)
-print(error/count)
+print(error/count)  # the average error
+
