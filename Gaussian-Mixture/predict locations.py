@@ -131,8 +131,8 @@ print(len(predicted_locs) - predicted_locs.count('rejected'), 'out of', len(pred
 #%%
 from geopy.distance import vincenty
 distances = []
-lat_to_km = 111
-long_to_km = 111*math.cos(49/180*math.pi)
+#lat_to_km = 111
+#long_to_km = 111*math.cos(49/180*math.pi)
 threshold_Frac_L = np.percentile(Frac_L,5)
 for t in np.arange(0,len(predicted_locs)):
     if predicted_locs[t] != 'rejected' and  Frac_L[t] < threshold_Frac_L: 
@@ -140,8 +140,8 @@ for t in np.arange(0,len(predicted_locs)):
         temp = test_data.iloc[t]
         #print(t,' ', temp['latitude'],temp['longitude'], 'vs', predicted_locs[t])
         actual = (temp['latitude'],temp['longitude'])
-        distance = ((lat_to_km*(actual[0]-predicted_locs[t][0]))**2 + ((long_to_km*(actual[1]-predicted_locs[t][1]))**2))**0.5
-        #distance = vincenty(actual,predicted_locs[t]).km
+        #distance = ((lat_to_km*(actual[0]-predicted_locs[t][0]))**2 + ((long_to_km*(actual[1]-predicted_locs[t][1]))**2))**0.5
+        distance = vincenty(actual,predicted_locs[t]).km
         distances.append(distance)
     else:
         True
