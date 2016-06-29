@@ -96,9 +96,12 @@ for t in np.arange(0,len(test_data)):
                 Z += score[i]*topic_distribution[i]*np.exp(gmms[i].score(XX))
                 #Z += topic_distribution[i]*np.exp(gmms[i].score(XX))
         Z_reshaped = Z.reshape(X.shape)
-        result = XX[Z.argmax()]
-        result = np.asarray([result[1]/100,result[0]/100])
-        print(t,' ', np.argmax(topic_distribution), ' ', result)
+        if Z.sum() == 0:
+            result = 'rejected'
+        else:
+            result = XX[Z.argmax()]
+            result = np.asarray([result[1]/100,result[0]/100])
+            print(t,' ', np.argmax(topic_distribution), ' ', result)
         predicted_locs.append(result)
         Zs.append(Z_reshaped)
         # Below is the method that can detect the peak of a continuous function. Running very slow.
