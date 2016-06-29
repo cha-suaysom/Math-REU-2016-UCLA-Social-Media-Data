@@ -24,7 +24,7 @@ minlong = min(b)
 maxlong = max(b)
 minlat = min(a)
 maxlat = max(a)
-score = pickle.load(open('score_of_topics.pkl'),'rb')
+score = pickle.load(open('score_of_topics.pkl','rb'))
 #%%
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 import re  # regex
