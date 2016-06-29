@@ -71,11 +71,6 @@ topic_distributions = text_count * H_normalized.T
 topic_distributions = topic_distributions / np.sum(topic_distributions,axis=1).reshape(N,1)
 
 #%%
-for t in np.arange(0,len(test_data)):
-    print(np.argmax(topic_distributions[t]), test_data.iloc[t]['topic'])
-    
-
-#%%
 import math
 bounds = [(minlong*100,maxlong*100),(minlat*100,maxlat*100)]
 predicted_locs = []
