@@ -15,10 +15,10 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
 #################DEFINE CONSTANT###################################
     rows = 100
     cols = 100
-    maxlat = 41.390205 + 2
-    minlat = 41.390205 -2
-    maxlong= 2.154007 +0.5
-    minlong = 2.154007 -0.5
+    LATITUDE_UPPER_BOUND = 41.390205 + 2
+    LATITUDE_LOWER_BOUND = 41.390205 -2
+    LONGITUDE_UPPER_BOUND= 2.154007 +0.5
+    LONGITUDE_LOWER_BOUND = 2.154007 -0.5
 
 #####################LOCATION MATRIX ##############################
     def GenerateGrid(rows, cols, neighbor_weight):
@@ -41,56 +41,68 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     #print(vector_list[0])
     vector_list = GenerateGrid(rows, cols, 0.5)
     Spatial = pickle.load(open('pandas_data_barc.pkl','rb'))
-    Spatial= Spatial.sample(frac = 0.1) ###Sample traning data
+    Spatial= Spatial.sample(frac = 0.03) ###Sample traning data
     Spatial = Spatial[Spatial["gps_precision"] == 10.0]
-    Spatial = Spatial[Spatial["latitude"] < maxlat]
-    Spatial = Spatial[Spatial["latitude"] > minlat]
-    Spatial = Spatial[(Spatial["longitude"] < maxlong)]
-    Spatial = Spatial[(Spatial["longitude"] > minlong)]
+    Spatial = Spatial[Spatial["latitude"] < LATITUDE_UPPER_BOUND]
+    Spatial = Spatial[Spatial["latitude"] > LATITUDE_LOWER_BOUND]
+    Spatial = Spatial[(Spatial["longitude"] < LONGITUDE_UPPER_BOUND)]
+    Spatial = Spatial[(Spatial["longitude"] > LONGITUDE_LOWER_BOUND)]
+    maxlat = Spatial["latitude"].max()+10**(-12)
+    minlat = Spatial["latitude"].min()-10**(-12)
+    maxlong = Spatial["longitude"].max()+10**(-12)
+    minlong = Spatial["longitude"].min()-10**(-12)
     raw_text = Spatial["text"]
+    XGRID  = []
+    YGRID = []
+    for row in Spatial.itertuples():
+        y = ((float(row[7])-minlat)/(maxlat-minlat))*rows
+        y = math.floor(y)
+        x = ((float(row[8])-minlong)/(maxlong-minlong))*cols
+        x = math.floor(x)
+        XGRID.append(x)
+        YGRID.append(y)
+    Spatial["xgrid"] = XGRID
+    Spatial["ygrid"] = YGRID
 
-    #Return index of the training and those not in training data 
-    def GenerateTrainingData(Spatial, fraction):     
-        ##FIX THIS !!!
 
-        #Spatial = Spatial.head(500)
-        #print(Spatial)
-        #L #location matrix
-        coorlist = []
-        for row in Spatial.itertuples():
-            #print(len(row))
-            y = ((float(row[7])-minlat)/(maxlat-minlat))*rows
-            y = math.floor(y)
-            x = ((float(row[8])-minlong)/(maxlong-minlong))*cols
-            x = math.floor(x)
-            coorlist.append(y*cols + x)
+    Spatial.reindex(np.random.permutation(df.index))
 
-        length = len(coorlist)  
-        #Generate random indices
-        AllIndex = [i for i in list(range(0, length))]
-        AllIndex = random.sample(AllIndex, length)
-        knownIndex = AllIndex[:int(length*fraction)]
-        unknownIndex = AllIndex[int(length*fraction):length]
- 
-        knownLocationMatrix = sps.vstack(vector_list[coorlist[i]] for i in list(range(0,length))) ### loops through all the tweets and adds the rows, L is created once.
-  
-        indexDict = {}
-        for i in unknownIndex:
-            indexDict[i] = 0
-        for i in knownIndex:
-            indexDict[i] = 1
-        unknownVectorToStack = []
-        for i in list(range(0,length)):
-            if (indexDict[i] == 0):
-                zeroMatrix = sps.csr_matrix(np.zeros(shape = (1, rows*cols)))
-                unknownVectorToStack.append(zeroMatrix)
-            else:
-                unknownVectorToStack.append(vector_list[coorlist[i]])
-        unknownLocationMatrix = sps.vstack(unknownVectorToStack)
 
-        return (knownLocationMatrix, unknownLocationMatrix, knownIndex, unknownIndex)  
 
-    knownLocationMatrix, unknownLocationMatrix, knownIndex, unknownIndex = GenerateTrainingData(Spatial, 0.9)
+    coorlist = []
+    for row in Spatial.itertuples():
+        #print(len(row))
+        y = row[11]
+        x = row[10]
+        coorlist.append(y*cols + x)
+
+    length = len(coorlist) 
+
+    #Generate random indices
+    AllIndex = [i for i in list(range(0, length))]
+    AllIndex = random.sample(AllIndex, length)
+    knownIndex = AllIndex[:int(length*fraction)]
+    unknownIndex = AllIndex[int(length*fraction):]
+
+    knownLocationMatrix = sps.vstack(vector_list[coorlist[i]] for i in list(range(0,length))) ### loops through all the tweets and adds the rows, L is created once.
+
+    indexDict = {}
+    for i in unknownIndex:
+        indexDict[i] = 0
+    for i in knownIndex:
+        indexDict[i] = 1
+    unknownVectorToStack = []
+    for i in list(range(0,length)):
+        if (indexDict[i] == 0):
+            zeroMatrix = sps.csr_matrix(np.zeros(shape = (1, rows*cols)))
+            unknownVectorToStack.append(zeroMatrix)
+        else:
+            unknownVectorToStack.append(vector_list[coorlist[i]])
+    unknownLocationMatrix = sps.vstack(unknownVectorToStack)
+
+    return (knownLocationMatrix, unknownLocationMatrix, knownIndex, unknownIndex)  
+
+    knownLocationMatrix, unknownLocationMatrix, knownIndex, unknownIndex = GenerateTrainingData(Spatial, 0.40)
     print("KnownLocationMatrix")
     print(knownLocationMatrix)
     print("unknownLocationMatrix")
@@ -104,15 +116,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
         pickle.dump(knownLocationMatrix, outfile, protocol = 4)
     with open('unknownIndex.pkl', 'wb') as outfile:
         pickle.dump(unknownIndex, outfile, protocol = 4)
-#     def oldAndNewLocation(KnownLocationNMFMatrix, W, H):
-#         predictedLocationMatrix = W*H
-#         #Obtain the row*col rightmost data to be LocationMatrix
-#         knownLocationMatrix = sps.vstack(knownLocationMatrix[i] for i in unknownIndex)
 
-#         #Obtain the row*col rightmost data to be predictedLocationMatrix
-#         predictedLocationMatrix = sps.vstack(predictedLocationMatrix[i][(-row*col):] for i in unknownIndex)
-
-#         return knownLocationMatrix, predictedLocationMatrix
 
     #########TEXT MATRIX ##############
 
@@ -158,7 +162,6 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
 
 
 ############ CONCATENATING LOCATION AND TFIDF MATRICES ##############
-    print("AlPHAAAAAAAAAAAAAAAAAAAAAAAAA")
     alpha = sps.linalg.norm(text_tf_idf,'fro')*1.0/sps.linalg.norm(unknownLocationMatrix,'fro') # Weight of location matrix
     unknownLocationMatrix = alpha*unknownLocationMatrix
     print(alpha)
