@@ -88,7 +88,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     L_rand = L_rand[(int((fraction*length))) :, :]
 
     print(L_rand.shape)
-    print(L.shape)
+    #print(L.shape)
     L = sps.csr_matrix(L)
     L_rand = sps.csr_matrix(L_rand)
     #print(L_rand)
