@@ -9,7 +9,8 @@ import pandas as pd
 # on my system it goes to /Users/davidnola/anaconda/lib/python3.5/site-packages/gmplot
 
 df = pickle.load(open('Location_pandas_data_barc.pkl','rb'))
-N = 63
+#df = pickle.load(open('rest_of_tweets_pandas_data_barc.pkl','rb'))
+N = 37
 # t1 = df[df['topic']==15]
 t1 = df[df['topics']==N]
 t1 = t1[t1['gps_precision']==10.0]

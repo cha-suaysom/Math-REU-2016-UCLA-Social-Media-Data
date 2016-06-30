@@ -7,7 +7,7 @@ names = np.array(pickle.load(open('TF_IDF_feature_names.pkl','rb')))
 print(H.shape)
 print(names[:500])
 print(H[:20,:20])
-H1 = H[:,:20710]
+H1 = H[:,:-10000]
 sorted = [list(names[np.argsort(x)[-10:]][::-1]) for x in H1] # get the indices of the 10 highest values in each topic in H, then get the corresponding words for these values
 for idx, s in enumerate(sorted):
     print(idx,s)

@@ -10,11 +10,6 @@ print(W.shape)
 print(H.shape)
 NT = 500 #number of topics
 Spatial = pickle.load(open('Location_pandas_data_barc.pkl','rb'))
-# Spatial = Spatial[Spatial["gps_precision"] == 10.0]
-# Topics = W.argmax(axis=1)#Assigns a topic to each tweet
-# Spatial["topics"] = Topics#data frame containing the valuable columns from raw data
-# Spatial = Spatial[Spatial["latitude"]>41]#removed one outlier with very low lattitude
-# Spatial = Spatial[Spatial["latitude"]>1.97]#removed one outlier with very low lattitude
 maxlat = Spatial["latitude"].max()
 minlat = Spatial["latitude"].min()#41.2638
 maxlong = Spatial["longitude"].max()
@@ -25,7 +20,7 @@ Spatial["latitude"] = (Spatial["latitude"]-minlat)/(maxlat-minlat)#we normalize 
 Spatial["longitude"] = (Spatial["longitude"]-minlong)/(maxlong-minlong)
 MSD_List = []#stores the Mean Square Distance between all the tweets in  agiven topic
 Topics_Size = []
-Spatial = Spatial[Spatial["gps_precision"] == 10.0]#taking gonly location accurete tweets
+#Spatial = Spatial[Spatial["gps_precision"] == 10.0]#taking only location accurete tweets
 for T in range(0,NT):#Mean Square Distance Calculation: we want to find the sum of the square of the
     x = (Spatial[Spatial["topics"] == T])# euclidean pairwise distances between all the tweets in each topic divided by the size of the topic (K)
     a = x["latitude"]
@@ -59,6 +54,20 @@ for T in range(0,NT):#F density calculation
         y = int((Glat[i]*(L-1*10**(-12))))#(which is equal to 1 once normalized) was not causing an out of bounds error when used as an index for the array
         A[x,y] = A[x,y]+ 1
     ArrayList.append(A/N)
+TopicPeak = []
+for T in range(0,NT):
+    B = ArrayList[T]
+    max  = 0
+    x =0
+    y = 0
+    for i  in range(0,L):
+        for j in range(0,L):
+            if B[i][j] > max:
+                max = B[i,j]
+                x = i
+                y = j
+    TopicPeak.append([x,y])
+df["peak"]= TopicPeak
 
 #once we created the denisty function array we calculate the information theoretic entropy associated with the probablity distribution
 #as well as a fractional L^0.5 norm, normalized by the usual L^1 norm of the distribution
@@ -87,3 +96,4 @@ plt.xlabel("LP")
 plt.ylabel("MSD")
 plt.title("NMF500 Topics LP vs MSD values")
 plt.show()
+pickle.dump(df, open('topic_stats_pandas.pkl', 'wb'))
