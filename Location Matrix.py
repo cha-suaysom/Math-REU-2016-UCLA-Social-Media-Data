@@ -42,7 +42,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     #print(vector_list[0])
     vector_list = GenerateGrid(rows, cols, 0.5)
     Spatial = pickle.load(open('pandas_data_barc.pkl','rb'))
-    Spatial= Spatial.sample(frac = 0.03) ###Sample traning data
+    Spatial= Spatial.sample(frac = 0.1) ###Sample traning data
     Spatial = Spatial[Spatial["gps_precision"] == 10.0]
     Spatial = Spatial[Spatial["latitude"] < LATITUDE_UPPER_BOUND]
     Spatial = Spatial[Spatial["latitude"] > LATITUDE_LOWER_BOUND]
@@ -154,29 +154,29 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     pickle.dump(rest_of_tweets, open('rest_of_tweets_TFIDF_barc.pkl', 'wb'))#saves the rest of tweets for testing
 
 
-# ############ CONCATENATING LOCATION AND TFIDF MATRICES ##############
-#     location_norm = sps.linalg.norm(L, 'fro')
-#     text_norm = sps.linalg.norm(text_tf_idf, 'fro')
-#     print(location_norm, text_norm, location_norm/text_norm)
-#
-#     alpha = 0.1*(text_norm/location_norm) # Weight of location matrix, normalized so that text and location parts have the same frobinous norm
-#     L = alpha*L
-#
-#     NMFLOC = sps.hstack((text_tf_idf, L))
-#     NMFLOC = NMFLOC.tocsr()
-#     print(NMFLOC.shape)
+############ CONCATENATING LOCATION AND TFIDF MATRICES ##############
+    location_norm = sps.linalg.norm(L, 'fro')
+    text_norm = sps.linalg.norm(text_tf_idf, 'fro')
+    print(location_norm, text_norm, location_norm/text_norm)
 
-############## CONCATENATING LOCATION AND TFIDF MATRICES WITH TESTING ##################
-    location_norm = sps.linalg.norm(L_test, 'fro')
-    text_norm = sps.linalg.norm(full_text_tf_idf, 'fro')
+    alpha = 0.1*(text_norm/location_norm) # Weight of location matrix, normalized so that text and location parts have the same frobinous norm
+    L = alpha*L
 
-    alpha = 0.1 * (
-    text_norm / location_norm)  # Weight of location matrix, normalized so that text and location parts have the same frobinous norm
-    L = alpha * L
-    print(full_text_tf_idf.shape, L_test.shape)
-    NMFLOC = sps.hstack((full_text_tf_idf, L_test))
+    NMFLOC = sps.hstack((text_tf_idf, L))
     NMFLOC = NMFLOC.tocsr()
-    #print(NMFLOC.shape)
+    print(NMFLOC.shape)
+
+# ############## CONCATENATING LOCATION AND TFIDF MATRICES WITH TESTING ##################
+#     location_norm = sps.linalg.norm(L_test, 'fro')
+#     text_norm = sps.linalg.norm(full_text_tf_idf, 'fro')
+#
+#     alpha = 0.1 * (
+#     text_norm / location_norm)  # Weight of location matrix, normalized so that text and location parts have the same frobinous norm
+#     L = alpha * L
+#     print(full_text_tf_idf.shape, L_test.shape)
+#     NMFLOC = sps.hstack((full_text_tf_idf, L_test))
+#     NMFLOC = NMFLOC.tocsr()
+#     #print(NMFLOC.shape)
 
 
 

@@ -22,7 +22,7 @@ MSD_List = []#stores the Mean Square Distance between all the tweets in  agiven 
 Topics_Size = []
 #Spatial = Spatial[Spatial["gps_precision"] == 10.0]#taking only location accurete tweets
 for T in range(0,NT):#Mean Square Distance Calculation: we want to find the sum of the square of the
-    x = (Spatial[Spatial["topics"] == T])# euclidean pairwise distances between all the tweets in each topic divided by the size of the topic (K)
+    x = Spatial[Spatial["topics"] == T]# euclidean pairwise distances between all the tweets in each topic divided by the size of the topic (K)
     a = x["latitude"]
     b = x["longitude"]
     K =len(a)

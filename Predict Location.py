@@ -16,6 +16,7 @@ print(W.shape, H.shape)
 Spatial_sample = pickle.load(open('Location_pandas_data_barc.pkl', 'rb'))
 Topics = W.argmax(axis=1)
 Spatial_sample["topics"] = Topics.tolist()
+pickle.dump(Spatial_sample, open('Location_pandas_data_barc.pkl', 'wb'))
 
 rest_of_tweets_Data = pickle.load(open('rest_of_tweets_pandas_data_barc.pkl','rb'))
 normalized_H = sklearn.preprocessing.normalize(H[:,:-10000])
@@ -30,7 +31,7 @@ rest_of_tweets_Data["topics"]= Topic_list
 pickle.dump(rest_of_tweets_Data, open('rest_of_tweets_pandas_data_barc.pkl','wb'))
 Topic_stats = pickle.load(open('topic_stats_pandas.pkl', 'rb'))
 
-for T in range(37,38):
+for T in range(21,22):
     subset= rest_of_tweets_Data[rest_of_tweets_Data["topics"]== T]
     xgrid = subset["xgrid"].tolist()
     ygrid = subset["ygrid"].tolist()
