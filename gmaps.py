@@ -10,7 +10,7 @@ import pandas as pd
 
 #df = pickle.load(open('Location_pandas_data_barc.pkl','rb'))
 df = pickle.load(open('rest_of_tweets_pandas_data_barc.pkl','rb'))
-N = 49
+N = 31
 # t1 = df[df['topic']==15]
 t1 = df[df['topics']==N]
 t1 = t1[t1['gps_precision']==10.0]

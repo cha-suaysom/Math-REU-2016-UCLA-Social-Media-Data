@@ -23,8 +23,8 @@ normalized_H = sklearn.preprocessing.normalize(H[:,:-10000])
 print(np.linalg.norm((normalized_H[0:2, :]), 'fro'))
 print(normalized_H.shape,rest_of_tweets_TFIDF.shape)
 
-Topics = normalized_H*(rest_of_tweets_TFIDF.T)
-Topic_list = (np.argmax(Topics.T, axis = 1)).tolist()
+topics = normalized_H*(rest_of_tweets_TFIDF.T)
+Topic_list = (np.argmax(topics.T, axis = 1)).tolist()
 print(len(Topic_list))
 print(len(rest_of_tweets_Data.index))
 rest_of_tweets_Data["topics"]= Topic_list
