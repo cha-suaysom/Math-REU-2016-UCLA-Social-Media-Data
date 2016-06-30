@@ -57,12 +57,12 @@ for T in range(0,100):
     pickle.dump(best_gmm, open('gmms/gmm_for_topic_'+str(T)+'.pkl','wb'))
 #%%
 #if you want to load gmms
-'''
+
 gmms = []
 for T in range(0,100):
-    g = pickle.load(open('gmms/gmm_for_topic_'+str(T)+'.pkl','rb'))
+    g = pickle.load(open('gmms_most_110/gmms/gmm_for_topic_'+str(T)+'.pkl','rb'))
     gmms.append(g)
-'''
+
 #%%
 ## Generate the scores for topics using L_half norm or MSD
 maxlat = training_data["latitude"].max()
@@ -125,10 +125,10 @@ msd_array.argsort()
 metric_array = np.asarray(MetricList)
 print('Ranking of Lhalf')
 metric_array.argsort()
-
+#%%
 #Generate the score
-#score = np.exp((-2)*msd_array)
-score = np.exp((-5)*metric_array)
+score = np.exp((-1.5)*msd_array)
+#score = np.exp((-5)*metric_array)
 #score = np.power(msd_array,-0.8)
 print(score)
 plt.hist(score)
@@ -136,7 +136,7 @@ plt.hist(score)
 pickle.dump(score,open('score_of_topics.pkl','wb'))
 #%%
 # Draw the contour map in the console, 18th topic is the yvr topic
-Topic_N  = 18
+Topic_N  = 39
 #t1 = raw_data[raw_data["topic"] == Topic_N]
 t1 = training_data[training_data['topic'] == Topic_N]
 a = t1["latitude"]

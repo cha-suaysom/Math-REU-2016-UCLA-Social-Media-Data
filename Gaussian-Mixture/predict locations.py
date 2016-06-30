@@ -79,7 +79,7 @@ X,Y = np.meshgrid(x,y)
 XX = np.array([X.ravel(),Y.ravel()]).T
 for i in np.arange(0,100):
     P = np.exp(gmms[i].score(XX))
-    P = P/P.sum() #normalize it?
+    #P = P/P.sum() #normalize it?
     gmm_scores.append(P)    
 
 #%%
@@ -90,38 +90,60 @@ topics = []
 unif_Z = np.ones(Lx*Ly)
 unif_Z = unif_Z / (Lx*Ly)
 L_P_unif = ((np.sqrt(unif_Z)).sum())**2
+Log = np.log(unif_Z)
+Log = np.nan_to_num(Log)
+EntropyMatrix = np.multiply(unif_Z,Log)
+Entropy_unif = -EntropyMatrix.sum()
 Frac_L = []
-
+Entropies = []
+probs = []
 for t in np.arange(0,len(test_data)):
     topic_distribution = topic_distributions[t]
     greatest_topic = np.argmax(topic_distribution)
     # Some of the tweet text consist characters that are not recognizable by ascii, and therefore its topic-distribution is (0,0,0...,0). We want to get rid of that
     if math.isnan(sum(topic_distribution)) == False and greatest_topic != 0 and max(topic_distribution)>0.3: # You can change 0.0 to any number in [0,1)
-        
+        temp = test_data.iloc[t]
+        actual = [temp['longitude']*100, temp['latitude']*100]
+        actual = np.asarray(actual).reshape(1,-1)       
         Z = np.zeros(Lx*Ly,)
-        topic_distr_sum = 0
+        norm_coeff = 0
+        prob = 0
         for i in np.arange(1,100):
             if topic_distribution[i]>0.1:
-                topic_distr_sum += topic_distribution[i]
-                Z += score[i]*topic_distribution[i]*gmm_scores[i]
+                weight = score[i]*topic_distribution[i]
+                Z += weight*gmm_scores[i]
+                norm_coeff += weight
+                prob += weight*np.exp(gmms[i].score(actual))
         Z_reshaped = Z.reshape(X.shape)
         sumofZ = Z_reshaped.sum()
         if sumofZ == 0:
             result = 'rejected'
             Frac_L.append(L_P_unif)
+            Entropies.append(Entropy_unif)
+            probs.append('NA')
         else:
             result = XX[Z.argmax()]
             result = np.asarray([result[1]/100,result[0]/100])
             Z_reshaped = Z_reshaped/sumofZ
             L_P = ((np.sqrt(Z_reshaped)).sum())**2
             Frac_L.append(L_P) 
-            print(t,' ', greatest_topic, ' ', result)
+            Log = np.log(Z_reshaped)#Log(P) matrix
+            Log = np.nan_to_num(Log)# removes enteries where P was 0 hence Log(P)  was undefined
+            EntropyMatrix = np.multiply(Z_reshaped,Log)
+            Ent = -EntropyMatrix.sum()
+            Entropies.append(Ent)
+            prob = prob/norm_coeff
+            probs.append(prob)
+            #print(t,' ', greatest_topic, ' ', result)
+            print(t)
         predicted_locs.append(result)
 
     else:
         result = 'rejected'
         predicted_locs.append(result)
         Frac_L.append(L_P_unif)
+        Entropies.append(Entropy_unif)
+        probs.append('NA')
     topics.append(greatest_topic)
 
 percent_rejected = predicted_locs.count('rejected')/len(predicted_locs) * 100
@@ -131,11 +153,13 @@ print(len(predicted_locs) - predicted_locs.count('rejected'), 'out of', len(pred
 #%%
 from geopy.distance import vincenty
 distances = []
-#lat_to_km = 111
-#long_to_km = 111*math.cos(49/180*math.pi)
+lat_to_km = 111
+long_to_km = 111*math.cos(49/180*math.pi)
 threshold_Frac_L = np.percentile(Frac_L,5)
+threshold_Entropy = np.percentile(Entropies,5)
 for t in np.arange(0,len(predicted_locs)):
-    if predicted_locs[t] != 'rejected' and  Frac_L[t] < threshold_Frac_L: 
+    #if predicted_locs[t] != 'rejected' and  Frac_L[t] < threshold_Frac_L: 
+    if predicted_locs[t] != 'rejected' and  Entropies[t] < threshold_Entropy: 
         #print(t)        
         temp = test_data.iloc[t]
         #print(t,' ', temp['latitude'],temp['longitude'], 'vs', predicted_locs[t])
@@ -147,6 +171,7 @@ for t in np.arange(0,len(predicted_locs)):
         True
         #distances.append('NA')
 print('avg error distance: ',sum(distances)/len(distances)) #avg error distance
+print('median error distance:', np.percentile(distances,50))
 print('length of distances list', len(distances))
 #%%
 #calculate the percentage of predictions that have less than 1km error
@@ -157,7 +182,7 @@ for t in np.arange(0,len(distances)):
         count += 1
 print(count/len(distances)*100,'% of the predicted tweets have error less than', radius, 'km.')
 #%%
-df = pd.DataFrame(columns = ( "topic", "predicted_loc","actual_loc","Frac_L", "topic_by_W"))
+df = pd.DataFrame(columns = ( "topic", "predicted_loc","actual_loc","Frac_L","Entropy","prob" ,"topic_by_W"))
 for t in np.arange(0,len(topics)):
     temp = test_data.iloc[t]
     actual = (temp['latitude'],temp['longitude'])
@@ -166,6 +191,8 @@ df['topic'] = topics
 df['predicted_loc'] = predicted_locs
 df['actual_loc'] = actual_locs
 df['Frac_L'] = Frac_L
+df['Entropy'] = Entropies
 topic_by_W = test_data[0:len(topics)]['topic'].tolist()
 df['topic_by_W'] = topic_by_W
-pickle.dump(df,open('predict_results','wb'))
+#%%
+pickle.dump(df,open('predict_results.pkl','wb'), protocol = 4)
