@@ -14,6 +14,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     from numpy import linalg
 
 #################DEFINE CONSTANT###################################
+    #Barcelona
     rows = 100
     cols = 100
     LATITUDE_UPPER_BOUND = 41.390205 + 2
@@ -21,7 +22,16 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     LONGITUDE_UPPER_BOUND= 2.154007 +0.5
     LONGITUDE_LOWER_BOUND = 2.154007 -0.5
 
-#####################LOCATION MATRIX ##############################
+    # #vancouver
+    # rows = 100 #26KM
+    # cols = 180#49KM
+    # LATITUDE_UPPER_BOUND = 49.2827 + 2
+    # LATITUDE_LOWER_BOUND = 49.2827 - 2
+    # LONGITUDE_UPPER_BOUND = -123.1207 + 2
+    # LONGITUDE_LOWER_BOUND = 123.1207 - 2
+
+
+    #####################LOCATION MATRIX ##############################
     def GenerateGrid(rows, cols, neighbor_weight):
         #neighbor_weight = 0.5 ###first we create all of the location vectors
         nw = neighbor_weight
@@ -80,7 +90,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     length = len(coorlist)
     L_full = sps.vstack(vector_list[coorlist[i]] for i in range(0,length)) ### loops through all the tweets and adds the rows, L is created once.
     print(L_full.shape)
-    pickle.dump(L_full, open('Location_matrix_full.pkl', 'wb'))
+    pickle.dump(L_full, open('Location_matrix_full_barc.pkl', 'wb'))
     L = L_full[:int(fraction*length),:]
     L_rand = L_full[:,:]
     L_rand = sklearn.utils.shuffle(L_rand)
@@ -195,7 +205,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     text_topic_model_WH = (text_topic_model_W,text_topic_model_H)
     pickle.dump(Spatial_sample, open('Location_pandas_data_barc.pkl', 'wb'))
 
-    pickle.dump(tf_idf.get_feature_names(), open('TF_IDF_feature_names.pkl', 'wb'))
+    pickle.dump(tf_idf.get_feature_names(), open('TF_IDF_feature_names_barc.pkl', 'wb'))
     pickle.dump(text_topic_model_WH, open('location_NMF_100_topics_barc_WH.pkl','wb'), protocol=4) # Save it to
     #pickle.dump(topic_model, open('NMF_vanc.pkl','wb'), protocol=4)
     # disk so we don't have to keep recalculating it later
