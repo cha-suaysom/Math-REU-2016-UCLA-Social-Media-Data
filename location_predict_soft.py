@@ -17,6 +17,7 @@ NT = 100  #number of topics
 Nt = W.shape[0]  #number of tweetsR
 
 # load training data and test data and combine them (Andy's code exports training and test data separately)
+#From Location Matrix.py Location_pandas_data_barc.pkl -> training_data Rest_of....->Test_data
 training_data = pickle.load(open('training_data.pkl', 'rb'))
 test_data = pickle.load(open('test_data.pkl', 'rb'))
 list1 = [training_data, test_data]
