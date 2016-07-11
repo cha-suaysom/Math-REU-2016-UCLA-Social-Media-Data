@@ -28,7 +28,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     # LATITUDE_UPPER_BOUND = 49.2827 + 2
     # LATITUDE_LOWER_BOUND = 49.2827 - 2
     # LONGITUDE_UPPER_BOUND = -123.1207 + 2
-    # LONGITUDE_LOWER_BOUND = 123.1207 - 2
+    # LONGITUDE_LOWER_BOUND = -123.1207 - 2
 
 
     #####################LOCATION MATRIX ##############################
