@@ -8,16 +8,16 @@ import math
 #names = np.array(pickle.load(open('TF_IDF_feature_names_barc.pkl','rb')))
 print(W.shape)
 print(H.shape)
-NT = 500 #number of topics
+NT = 100 #number of topics
 Spatial = pickle.load(open('Location_pandas_data_barc.pkl','rb'))
-maxlat = Spatial["latitude"].max()
-minlat = Spatial["latitude"].min()#41.2638
-maxlong = Spatial["longitude"].max()
-minlong = Spatial["longitude"].min()# 1.97351
+print(len(Spatial.index))
+maxlat = 41.5319
+minlat = 41.2638
+minlong = 1.97775
+maxlong = 2.36254
+
 print(maxlat, minlat)
 print(maxlong, minlong)
-Spatial["latitude"] = (Spatial["latitude"]-minlat)/(maxlat-minlat)#we normalize the latatitudal and longitudal data of the tweets to be between 0 and 1
-Spatial["longitude"] = (Spatial["longitude"]-minlong)/(maxlong-minlong)
 MSD_List = []#stores the Mean Square Distance between all the tweets in  agiven topic
 Topics_Size = []
 #Spatial = Spatial[Spatial["gps_precision"] == 10.0]#taking only location accurete tweets
@@ -40,34 +40,34 @@ df["Length"] = Topics_Size
 #the number of tweets in each of the squares, we later divide the matrix by the total number of tweets in the topic to get a probibistic matrix of
 # where are the tweets distrbuted for each topic
 
-
+rows = cols = 100
 L =100#L can be refined to 500 or even 1000
 ArrayList = []
 for T in range(0,NT):#F density calculation
     A = np.zeros((L,L))
     G = Spatial[Spatial["topics"] == T]
-    Glong = G["longitude"].tolist()
-    Glat = G["latitude"].tolist()
-    N = len(Glat)
-    for i in range(0,N):
-        x = int((Glong[i]*(L-1*10**(-12))))#subtracted 10^-12 from L which is neglible but needed to make sure that the one tweet with the maximal longitude
-        y = int((Glat[i]*(L-1*10**(-12))))#(which is equal to 1 once normalized) was not causing an out of bounds error when used as an index for the array
+    N = len(G.index)
+    for row in G.itertuples():
+        x = row[10]
+        y= row[11]
         A[x,y] = A[x,y]+ 1
     ArrayList.append(A/N)
 TopicPeak = []
 for T in range(0,NT):
     B = ArrayList[T]
-    max  = 0
-    x =0
-    y = 0
-    for i  in range(0,L):
+    C = B[:,:]
+    max = 0
+    xpeak = 0
+    ypeak = 0
+    for i in range(0,L):
         for j in range(0,L):
-            if B[i][j] > max:
-                max = B[i,j]
-                x = i
-                y = j
-    TopicPeak.append([x,y])
+            if C[i][j] > max:
+                max = C[i,j]
+                xpeak = i
+                ypeak = j
+    TopicPeak.append([xpeak,ypeak])
 df["peak"]= TopicPeak
+print(TopicPeak)
 
 #once we created the denisty function array we calculate the information theoretic entropy associated with the probablity distribution
 #as well as a fractional L^0.5 norm, normalized by the usual L^1 norm of the distribution
@@ -85,8 +85,8 @@ for X in ArrayList:
     EntropyList.append(Ent)
 df["L0.5"]= MetricList
 df["Entropy"] = EntropyList
-df = df.sort_values(by = "MSD")
-df = df[df["Length"]>0]#removes empty topics
+# df = df.sort_values(by = "MSD")
+# df = df[df["Length"]>0]#removes empty topics
 print(df.head(100))
 print("MSD Mean: " , df["MSD"].mean(),"L one half: ", df["L0.5"].mean())
 print("MSD Median: " , df["MSD"].median(),"L one half: ", df["L0.5"].median())

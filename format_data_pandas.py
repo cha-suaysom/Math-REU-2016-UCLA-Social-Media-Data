@@ -7,7 +7,7 @@ import csv
 #
 
 raw_data = None
-for f in glob.glob('Raw Data Barcelona/*.tsv'):
+for f in glob.glob('vancouver/*.txt'):#use .tsv when using barcelona data
     try:
         d = pandas.read_csv(open(f,'rU'), sep="\t",
                             header=None,
@@ -40,6 +40,6 @@ raw_data=raw_data.dropna() # drop any row with an NA in any column
 
 print(len(raw_data))
 
-pickle.dump(raw_data, open('pandas_data.pkl','wb'))
+pickle.dump(raw_data, open('pandas_data_vanc.pkl','wb'))
 
-pickle.dump(raw_data['text'].tolist(), open('raw_text_data.pkl','wb'))
+pickle.dump(raw_data['text'].tolist(), open('raw_text_data_vanc.pkl','wb'))

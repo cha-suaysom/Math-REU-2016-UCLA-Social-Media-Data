@@ -52,7 +52,6 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     #print(vector_list[0])
     vector_list = GenerateGrid(rows, cols, 0.5)
     Spatial = pickle.load(open('pandas_data_barc.pkl','rb'))
-    Spatial= Spatial.sample(frac = 0.1) ###Sample traning data
     Spatial = Spatial[Spatial["gps_precision"] == 10.0]
     Spatial = Spatial[Spatial["latitude"] < LATITUDE_UPPER_BOUND]
     Spatial = Spatial[Spatial["latitude"] > LATITUDE_LOWER_BOUND]
@@ -62,6 +61,9 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     minlat = Spatial["latitude"].min()-10**(-12)
     maxlong = Spatial["longitude"].max()+10**(-12)
     minlong = Spatial["longitude"].min()-10**(-12)
+    print(minlat, maxlat)
+    print(minlong, maxlong)
+    #Spatial = Spatial.sample(frac=0.03)  ###Sample traning data
     raw_text = Spatial["text"]
     XGRID  = []
     YGRID = []
@@ -83,6 +85,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     pickle.dump(rest_of_tweets_pandas, open('rest_of_tweets_pandas_data_barc.pkl', 'wb'))  # saves the rest of tweets for testing
     raw_text = Spatial["text"]
     coorlist = []
+    print("hi")
     for row in Spatial.itertuples():
         x = row[10]
         y = row[11]
@@ -169,7 +172,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     text_norm = sps.linalg.norm(text_tf_idf, 'fro')
     print(location_norm, text_norm, location_norm/text_norm)
 
-    alpha = 0.1*(text_norm/location_norm) # Weight of location matrix, normalized so that text and location parts have the same frobinous norm
+    alpha = 0.5*(text_norm/location_norm) # Weight of location matrix, normalized so that text and location parts have the same frobinous norm
     L = alpha*L
 
     NMFLOC = sps.hstack((text_tf_idf, L))
@@ -191,7 +194,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
 
 
 ######## PYTHON NMF #############
-    topic_model = NMF(n_components=100, verbose=1, tol=0.001)  # Sure lets compress to 100 topics why not...
+    topic_model = NMF(n_components=100, verbose=1, tol=0.005)  # Sure lets compress to 100 topics why not...
 
     text_topic_model_W = topic_model.fit_transform(NMFLOC) # NMF's .transform() returns W by
     # default, but we can get H as follows:

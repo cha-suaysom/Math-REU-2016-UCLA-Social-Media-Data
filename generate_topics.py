@@ -2,7 +2,7 @@ import pickle
 import numpy as np
 
 (W, H) = pickle.load(open('Location_NMF_100_topics_barc_WH.pkl','rb'))
-names = np.array(pickle.load(open('TF_IDF_feature_names.pkl','rb')))
+names = np.array(pickle.load(open('TF_IDF_feature_names_barc.pkl','rb')))
 
 print(H.shape)
 print(names[:500])
