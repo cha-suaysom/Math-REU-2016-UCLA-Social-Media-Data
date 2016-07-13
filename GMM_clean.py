@@ -541,7 +541,7 @@ for trial in np.arange(1,n_trial+1):
     non_rejected = predicted_results[predicted_results['predicted_loc']!='rejected']   
     for k in np.arange(0,len(cis)):
         print(ci_thresholds[k])
-        report = pd.DataFrame(columns = ("trainsize","testsize","ci_threshold","accepted_len","%accepted","LP_threshold%","good_len","%predict", "avgerr","mederr","500m","1km", "2km")) #"prob",
+        report = pd.DataFrame(columns = ("trainsize","testsize","ci_threshold","accepted_len","%accepted","LP_threshold%","good_len","%predict", "avgerr","mederr","200m","1km", "2km")) #"prob",
         
         accepted = non_rejected[non_rejected['highest_ci']>=ci_thresholds[k]]
         TRS = []
@@ -558,7 +558,7 @@ for trial in np.arange(1,n_trial+1):
         AE = []
         ME = []
         
-        FIVE = []
+        EXACT = []
         ONE = []
         TWO = []
         #PROB = []
@@ -595,11 +595,11 @@ for trial in np.arange(1,n_trial+1):
             count3 = 0
             for t in np.arange(0,len(good)):
                 dist = good_distances[t]
-                if dist < 0.5:
+                if dist < 0.2:
                     count1 += 1
                     count2 += 1
                     count3 += 1
-                if dist < 1: 
+                elif dist < 1: 
                     count2 += 1
                     count3 +=1
                 elif dist < 2:
@@ -633,7 +633,7 @@ for trial in np.arange(1,n_trial+1):
             percent2 = round(counts[1]/good_len*100,2)
             percent3 = round(counts[2]/good_len*100,2)
             
-            FIVE.append((counts[0],str(percent1)+"%"))
+            EXACT.append((counts[0],str(percent1)+"%"))
             ONE.append((counts[1],str(percent2)+"%"))
             TWO.append((counts[2],str(percent3)+"%"))         
             
@@ -651,7 +651,7 @@ for trial in np.arange(1,n_trial+1):
         report['avgerr'] = AE
         report['mederr'] = ME
         #report['prob'] = PROB
-        report['500m'] = FIVE
+        report['500m'] = EXACT
         report['1km'] = ONE
         report['2km'] = TWO
         
