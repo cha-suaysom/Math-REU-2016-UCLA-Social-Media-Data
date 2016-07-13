@@ -651,7 +651,7 @@ for trial in np.arange(1,n_trial+1):
         report['avgerr'] = AE
         report['mederr'] = ME
         #report['prob'] = PROB
-        report['500m'] = EXACT
+        report['200m'] = EXACT
         report['1km'] = ONE
         report['2km'] = TWO
         
