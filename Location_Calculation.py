@@ -4,17 +4,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-(W, H) = pickle.load(open('Location_NMF_100_topics_barc_WH.pkl','rb'))
+(W, H) = pickle.load(open('Location_NMF_100_topics_vanc_WH.pkl','rb'))
 #names = np.array(pickle.load(open('TF_IDF_feature_names_barc.pkl','rb')))
 print(W.shape)
 print(H.shape)
 NT = 100 #number of topics
-Spatial = pickle.load(open('Location_pandas_data_barc.pkl','rb'))
+Spatial = pickle.load(open('Location_pandas_data_vanc.pkl','rb'))
 print(len(Spatial.index))
-maxlat = 41.5319
-minlat = 41.2638
-minlong = 1.97775
-maxlong = 2.36254
+# #Barcelona
+# maxlat = 41.5319
+# minlat = 41.2638
+# minlong = 1.97775
+# maxlong = 2.36254
+#Vancouver
+minlat = 49.1319
+maxlat = 49.3716
+minlong = -123.266
+maxlong = -122.598
 
 print(maxlat, minlat)
 print(maxlong, minlong)
@@ -40,11 +46,11 @@ df["Length"] = Topics_Size
 #the number of tweets in each of the squares, we later divide the matrix by the total number of tweets in the topic to get a probibistic matrix of
 # where are the tweets distrbuted for each topic
 
-rows = cols = 100
-L =100#L can be refined to 500 or even 1000
+rows = 100
+cols = 180
 ArrayList = []
 for T in range(0,NT):#F density calculation
-    A = np.zeros((L,L))
+    A = np.zeros((cols,rows))
     G = Spatial[Spatial["topics"] == T]
     N = len(G.index)
     for row in G.itertuples():
@@ -59,8 +65,8 @@ for T in range(0,NT):
     max = 0
     xpeak = 0
     ypeak = 0
-    for i in range(0,L):
-        for j in range(0,L):
+    for i in range(0,cols):
+        for j in range(0,rows):
             if C[i][j] > max:
                 max = C[i,j]
                 xpeak = i
@@ -74,8 +80,8 @@ print(TopicPeak)
 MetricList= []
 EntropyList = []
 for X in ArrayList:
-    L_P = ((np.sqrt(X)).sum()*(1/(L**2)))**2
-    L_1 = (X.sum()+1*10**(-12))*(1/(L**2))
+    L_P = ((np.sqrt(X)).sum()*(1/(rows*cols)))**2
+    L_1 = (X.sum()+1*10**(-12))*(1/(rows*cols))
     Final_L = L_P/L_1# L^0.5 norm divided by L^1 norm
     MetricList.append(Final_L)
     Log = np.log(X)#Log(P) matrix
@@ -96,4 +102,4 @@ plt.xlabel("LP")
 plt.ylabel("MSD")
 plt.title("NMF500 Topics LP vs MSD values")
 plt.show()
-pickle.dump(df, open('topic_stats_pandas.pkl', 'wb'))
+pickle.dump(df, open('topic_stats_pandas_vanc.pkl', 'wb'))
