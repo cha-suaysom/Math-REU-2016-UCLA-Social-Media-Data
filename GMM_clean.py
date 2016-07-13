@@ -635,7 +635,7 @@ for trial in np.arange(1,n_trial+1):
             
             FIVE.append((counts[0],str(percent1)+"%"))
             ONE.append((counts[1],str(percent2)+"%"))
-            TWO.append(counts[2],str(percent3)+"%")            
+            TWO.append((counts[2],str(percent3)+"%"))         
             
         report['trainsize'] = TRS
         report['testsize'] = TES
