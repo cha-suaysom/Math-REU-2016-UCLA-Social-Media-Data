@@ -106,8 +106,8 @@ for trial in np.arange(1,n_trial+1):
     #fraction = 1
     coorlist = []
     for row in training_data.itertuples():
-        x = row[-2] #10
-        y = row[-1] #11
+        x = row[10] 
+        y = row[11] 
         coorlist.append(y*cols + x)
     length = len(coorlist)
     L_full = sps.vstack(vector_list[coorlist[i]] for i in range(0,length)) ### loops through all the tweets and adds the rows, L is created once.
