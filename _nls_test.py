@@ -146,16 +146,17 @@ normalized_H = sklearn.preprocessing.normalize(H[:,:-rows*cols])
 print(np.linalg.norm((normalized_H[0:2, :]), 'fro'))
 print(normalized_H.shape,rest_of_tweets_TFIDF.shape)
 
-normalized_tweets = sklearn.preprocessing.normalize(rest_of_tweets_TFIDF)
+#normalized_tweets = sklearn.preprocessing.normalize(rest_of_tweets_TFIDF)
 
-topics = normalized_H*(normalized_tweets.T)
+topics = normalized_H*(rest_of_tweets_TFIDF.T)
 pickle.dump(topics, open('test_topic_distribution_barc.pkl', 'wb'))
 H_ = topics
 W_ = (H[:,:-rows*cols]).T
 V_ = (rest_of_tweets_TFIDF).T
 print(H_.shape, W_.shape, V_.shape)
 (newH, somegrad, numberOfIterations) = _nls_subproblem(V_,W_,H_, 0.001,1000)
+print(numberOfIterations)
 W_testing= newH.T
-W_testing = sklearn.preprocessing.normalize(W_testing)
-pickle.dump(W_testing, open('test_distribution_barc_nls.pkl', 'wb'))
+W_normalized = sklearn.preprocessing.normalize(W_testing)
+pickle.dump(W_normalized, open('test_distribution_barc_nls.pkl', 'wb'))
 print(linalg.norm((W_testing-topics.T), 'fro'))
