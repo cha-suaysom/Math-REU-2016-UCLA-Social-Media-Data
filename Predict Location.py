@@ -13,6 +13,7 @@ import pandas as pd
 from _nls_test import _nls_subproblem
 from sklearn.decomposition import NMF
 from scipy import linalg
+from copy import deepcopy
 
 rows = 100
 cols = 100
@@ -42,10 +43,13 @@ topics_guess = normalized_H*(rest_of_tweets_TFIDF.T) #estimates "W" assuming ort
 
 
 #essentially NLS problem, but under the NMF 'hood'
-topic_model = NMF(n_components=100, init= 'custom', tol = 0.001, max_iter= 1)  # Sure lets compress to 100 topics why not...
+topic_model = NMF(n_components=100, init= 'custom', tol = 0.000001, max_iter= 1)  # Sure lets compress to 100 topics why not...
 NMF.nls_max_iter = 1000
-topics = topic_model.fit_transform(rest_of_tweets_TFIDF, W =topics_guess.T, H = H_text)
+W_NMF = deepcopy(topics_guess)
+topics = topic_model.fit_transform(rest_of_tweets_TFIDF, W =W_NMF.T, H = H_text)
 print(topics.shape)
+distance = linalg.norm((topics.T-topics_guess))
+print(distance)
 topics = sklearn.preprocessing.normalize(topics)
 pickle.dump(topics, open('test_topic_ditribution_barc.pkl', 'wb'))
 
