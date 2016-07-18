@@ -57,8 +57,8 @@
       <file leaf-file-name="Predict Location.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Predict Location.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="52" column="48" selection-start-line="52" selection-start-column="48" selection-end-line="52" selection-end-column="48" />
+            <state relative-caret-position="308">
+              <caret line="48" column="85" selection-start-line="48" selection-start-column="85" selection-end-line="48" selection-end-column="85" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -69,8 +69,8 @@
       <file leaf-file-name="Location Matrix.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Location Matrix.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2541">
-              <caret line="79" column="19" selection-start-line="79" selection-start-column="19" selection-end-line="79" selection-end-column="19" />
+            <state relative-caret-position="385">
+              <caret line="79" column="18" selection-start-line="79" selection-start-column="18" selection-end-line="79" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -91,7 +91,7 @@
       <file leaf-file-name="Location_Calculation.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Location_Calculation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
+            <state relative-caret-position="-1309">
               <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -103,8 +103,8 @@
       <file leaf-file-name="generate average.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/generate average.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-413">
-              <caret line="69" column="22" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
+            <state relative-caret-position="-989">
+              <caret line="43" column="58" selection-start-line="43" selection-start-column="58" selection-end-line="43" selection-end-column="58" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -163,13 +163,13 @@
         <option value="$PROJECT_DIR$/Hard_test.py" />
         <option value="$PROJECT_DIR$/GMM generator.py" />
         <option value="$PROJECT_DIR$/generate_topics.py" />
-        <option value="$PROJECT_DIR$/generate average.py" />
         <option value="$PROJECT_DIR$/gmaps.py" />
         <option value="$PROJECT_DIR$/format_data_pandas.py" />
         <option value="$PROJECT_DIR$/Minimum User Tags.py" />
         <option value="$PROJECT_DIR$/_nls_test.py" />
         <option value="$PROJECT_DIR$/Location_Calculation.py" />
         <option value="$PROJECT_DIR$/Location Matrix.py" />
+        <option value="$PROJECT_DIR$/generate average.py" />
         <option value="$PROJECT_DIR$/Predict Location.py" />
       </list>
     </option>
@@ -225,7 +225,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1149" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
   </component>
-  <component name="RunManager" selected="Python.Predict Location">
+  <component name="RunManager" selected="Python.generate average">
     <configuration default="false" name="Predict Location" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -239,23 +239,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Math-REU-2016-UCLA-Social-Media-Data" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Predict Location.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="_nls_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Math-REU-2016-UCLA-Social-Media-Data" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/_nls_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -307,6 +290,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Math-REU-2016-UCLA-Social-Media-Data" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Location Matrix.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="generate average" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Math-REU-2016-UCLA-Social-Media-Data" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/generate average.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -447,18 +447,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.Predict Location" />
-      <item index="1" class="java.lang.String" itemvalue="Python._nls_test" />
-      <item index="2" class="java.lang.String" itemvalue="Python.Location_Calculation" />
-      <item index="3" class="java.lang.String" itemvalue="Python.generate_topics" />
-      <item index="4" class="java.lang.String" itemvalue="Python.Location Matrix" />
+      <item index="1" class="java.lang.String" itemvalue="Python.Location_Calculation" />
+      <item index="2" class="java.lang.String" itemvalue="Python.generate_topics" />
+      <item index="3" class="java.lang.String" itemvalue="Python.Location Matrix" />
+      <item index="4" class="java.lang.String" itemvalue="Python.generate average" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.Predict Location" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Location Matrix" />
-        <item index="2" class="java.lang.String" itemvalue="Python.generate_topics" />
-        <item index="3" class="java.lang.String" itemvalue="Python.Location_Calculation" />
-        <item index="4" class="java.lang.String" itemvalue="Python._nls_test" />
+        <item index="0" class="java.lang.String" itemvalue="Python.generate average" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Predict Location" />
+        <item index="2" class="java.lang.String" itemvalue="Python.Location_Calculation" />
+        <item index="3" class="java.lang.String" itemvalue="Python.Location Matrix" />
+        <item index="4" class="java.lang.String" itemvalue="Python.generate_topics" />
       </list>
     </recent_temporary>
   </component>
@@ -610,7 +610,14 @@
       <option name="project" value="LOCAL" />
       <updated>1468865956705</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="A more accurate projection of the testing tweets into the training space. run this after NMF">
+      <created>1468878043120</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1468878043120</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1007,26 +1014,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/generate average.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-413">
-          <caret line="69" column="22" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Location_Calculation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/generate_topics.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
@@ -1047,18 +1034,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Location_Calculation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1309">
+          <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Location Matrix.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2541">
-          <caret line="79" column="19" selection-start-line="79" selection-start-column="19" selection-end-line="79" selection-end-column="19" />
+        <state relative-caret-position="385">
+          <caret line="79" column="18" selection-start-line="79" selection-start-column="18" selection-end-line="79" selection-end-column="18" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/generate average.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-989">
+          <caret line="43" column="58" selection-start-line="43" selection-start-column="58" selection-end-line="43" selection-end-column="58" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Predict Location.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="52" column="48" selection-start-line="52" selection-start-column="48" selection-end-line="52" selection-end-column="48" />
+        <state relative-caret-position="308">
+          <caret line="48" column="85" selection-start-line="48" selection-start-column="85" selection-end-line="48" selection-end-column="85" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
