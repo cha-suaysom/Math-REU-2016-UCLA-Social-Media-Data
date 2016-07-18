@@ -51,7 +51,7 @@ print(topics.shape)
 distance = linalg.norm((topics.T-topics_guess))
 print(distance)
 topics = sklearn.preprocessing.normalize(topics)
-pickle.dump(topics, open('test_topic_ditribution_barc.pkl', 'wb'))
+pickle.dump(topics, open('test_topic_distribution_barc.pkl', 'wb'))
 
 B = (np.max(topics, axis = 1)>0.2)
 
