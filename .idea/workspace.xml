@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a921ddc1-bb1f-4488-8e3a-641b00293406" name="Default" comment="">
+    <list default="true" id="a921ddc1-bb1f-4488-8e3a-641b00293406" name="Default" comment="A more accurate projection of the testing tweets into the training space. run this after NMF">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Predict Location.py" afterPath="$PROJECT_DIR$/Predict Location.py" />
+    </list>
+    <list id="b07cff15-7953-4a83-ae42-d240f4c305b2" name="New changelist" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Location Matrix.py" afterPath="$PROJECT_DIR$/Location Matrix.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Location_Calculation.py" afterPath="$PROJECT_DIR$/Location_Calculation.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Predict Location.py" afterPath="$PROJECT_DIR$/Predict Location.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_nls_test.py" afterPath="$PROJECT_DIR$/_nls_test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generate_topics.py" afterPath="$PROJECT_DIR$/generate_topics.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gmaps.py" afterPath="$PROJECT_DIR$/gmaps.py" />
     </list>
     <ignored path="Math-REU-2016-UCLA-Social-Media-Data.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <file path="$PROJECT_DIR$/Location Matrix.py" ignored="false" />
+    <file path="$PROJECT_DIR$/Location_Calculation.py" ignored="false" />
+    <file path="$PROJECT_DIR$/gmaps.py" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Predict Location.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Predict Location.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Predict Location.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-263">
-              <caret line="53" column="72" selection-start-line="53" selection-start-column="72" selection-end-line="53" selection-end-column="72" />
+            <state relative-caret-position="308">
+              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -66,8 +69,8 @@
       <file leaf-file-name="Location Matrix.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Location Matrix.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1958">
-              <caret line="89" column="19" selection-start-line="89" selection-start-column="19" selection-end-line="89" selection-end-column="19" />
+            <state relative-caret-position="-2541">
+              <caret line="79" column="19" selection-start-line="79" selection-start-column="19" selection-end-line="79" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -85,11 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Location_Calculation.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Location_Calculation.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Location_Calculation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1605">
-              <caret line="11" column="53" selection-start-line="11" selection-start-column="53" selection-end-line="11" selection-end-column="53" />
+            <state relative-caret-position="155">
+              <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -122,8 +125,8 @@
       <file leaf-file-name="_nls_test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_nls_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="467">
-              <caret line="162" column="0" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
+            <state relative-caret-position="-528">
+              <caret line="94" column="19" selection-start-line="94" selection-start-column="19" selection-end-line="94" selection-end-column="19" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -162,12 +165,12 @@
         <option value="$PROJECT_DIR$/generate_topics.py" />
         <option value="$PROJECT_DIR$/generate average.py" />
         <option value="$PROJECT_DIR$/gmaps.py" />
-        <option value="$PROJECT_DIR$/Location Matrix.py" />
         <option value="$PROJECT_DIR$/format_data_pandas.py" />
         <option value="$PROJECT_DIR$/Minimum User Tags.py" />
         <option value="$PROJECT_DIR$/_nls_test.py" />
-        <option value="$PROJECT_DIR$/Predict Location.py" />
         <option value="$PROJECT_DIR$/Location_Calculation.py" />
+        <option value="$PROJECT_DIR$/Location Matrix.py" />
+        <option value="$PROJECT_DIR$/Predict Location.py" />
       </list>
     </option>
   </component>
@@ -222,7 +225,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1149" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
   </component>
-  <component name="RunManager" selected="Python.generate_topics">
+  <component name="RunManager" selected="Python.Predict Location">
     <configuration default="false" name="Predict Location" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -236,23 +239,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Math-REU-2016-UCLA-Social-Media-Data" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Predict Location.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="Minimum User Tags" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Math-REU-2016-UCLA-Social-Media-Data" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Minimum User Tags.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -304,6 +290,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Math-REU-2016-UCLA-Social-Media-Data" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/generate_topics.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Location Matrix" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Math-REU-2016-UCLA-Social-Media-Data" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Location Matrix.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -444,18 +447,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.Predict Location" />
-      <item index="1" class="java.lang.String" itemvalue="Python.Minimum User Tags" />
-      <item index="2" class="java.lang.String" itemvalue="Python._nls_test" />
-      <item index="3" class="java.lang.String" itemvalue="Python.Location_Calculation" />
-      <item index="4" class="java.lang.String" itemvalue="Python.generate_topics" />
+      <item index="1" class="java.lang.String" itemvalue="Python._nls_test" />
+      <item index="2" class="java.lang.String" itemvalue="Python.Location_Calculation" />
+      <item index="3" class="java.lang.String" itemvalue="Python.generate_topics" />
+      <item index="4" class="java.lang.String" itemvalue="Python.Location Matrix" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.generate_topics" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Location_Calculation" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Predict Location" />
-        <item index="3" class="java.lang.String" itemvalue="Python._nls_test" />
-        <item index="4" class="java.lang.String" itemvalue="Python.Minimum User Tags" />
+        <item index="0" class="java.lang.String" itemvalue="Python.Predict Location" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Location Matrix" />
+        <item index="2" class="java.lang.String" itemvalue="Python.generate_topics" />
+        <item index="3" class="java.lang.String" itemvalue="Python.Location_Calculation" />
+        <item index="4" class="java.lang.String" itemvalue="Python._nls_test" />
       </list>
     </recent_temporary>
   </component>
@@ -468,6 +471,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="a921ddc1-bb1f-4488-8e3a-641b00293406" name="Default" comment="" />
+      <changelist id="b07cff15-7953-4a83-ae42-d240f4c305b2" name="New changelist" comment="" />
       <created>1466104134422</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -585,7 +589,21 @@
       <option name="project" value="LOCAL" />
       <updated>1468609036490</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="A more accurate projection of the testing tweets into the training space. run this after NMF">
+      <created>1468860117500</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1468860117500</updated>
+    </task>
+    <task id="LOCAL-00018" summary="New changelist">
+      <created>1468860186964</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1468860186964</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView">
@@ -637,7 +655,9 @@
     <MESSAGE value="Need to run this, then location calculation, then this again" />
     <MESSAGE value="Added parameters for vancouver data set" />
     <MESSAGE value="A more accurate projection of the testing tweets into the training space. run this after NMF" />
-    <option name="LAST_COMMIT_MESSAGE" value="A more accurate projection of the testing tweets into the training space. run this after NMF" />
+    <MESSAGE value="New changelist" />
+    <option name="LAST_COMMIT_MESSAGE" value="New changelist" />
+    <option name="PRESELECT_EXISTING_CHANGELIST" value="false" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -954,14 +974,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Location Matrix.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1958">
-          <caret line="89" column="19" selection-start-line="89" selection-start-column="19" selection-end-line="89" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/format_data_pandas.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="682">
@@ -998,12 +1010,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_nls_test.py">
+    <entry file="file://$PROJECT_DIR$/Location_Calculation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="162" column="0" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
+        <state relative-caret-position="155">
+          <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1018,22 +1030,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Predict Location.py">
+    <entry file="file://$PROJECT_DIR$/_nls_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-263">
-          <caret line="53" column="72" selection-start-line="53" selection-start-column="72" selection-end-line="53" selection-end-column="72" />
+        <state relative-caret-position="-528">
+          <caret line="94" column="19" selection-start-line="94" selection-start-column="19" selection-end-line="94" selection-end-column="19" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Location_Calculation.py">
+    <entry file="file://$PROJECT_DIR$/Location Matrix.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1605">
-          <caret line="11" column="53" selection-start-line="11" selection-start-column="53" selection-end-line="11" selection-end-column="53" />
+        <state relative-caret-position="-2541">
+          <caret line="79" column="19" selection-start-line="79" selection-start-column="19" selection-end-line="79" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Predict Location.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
