@@ -130,33 +130,33 @@ def _nls_subproblem(V, W, H, tol, max_iter, alpha=0., l1_ratio=0.,
         warnings.warn("Iteration limit reached in nls subproblem.")
     return H, grad, n_iter
 
-import pickle
-rows = 100
-cols = 100
-(W, H) = pickle.load(open('Location_NMF_100_topics_barc_WH.pkl','rb'))
-rest_of_tweets_TFIDF  = pickle.load(open('rest_of_tweets_TFIDF_barc.pkl','rb'))
-print(W.shape, H.shape)
-Spatial_sample = pickle.load(open('Location_pandas_data_barc.pkl', 'rb'))
-Topics = W.argmax(axis=1)
-Spatial_sample["topics"] = Topics.tolist()
-pickle.dump(Spatial_sample, open('Location_pandas_data_barc.pkl', 'wb'))
-
-rest_of_tweets_Data = pickle.load(open('rest_of_tweets_pandas_data_barc.pkl','rb'))
-normalized_H = sklearn.preprocessing.normalize(H[:,:-rows*cols])
-print(np.linalg.norm((normalized_H[0:2, :]), 'fro'))
-print(normalized_H.shape,rest_of_tweets_TFIDF.shape)
-
-#normalized_tweets = sklearn.preprocessing.normalize(rest_of_tweets_TFIDF)
-
-topics = normalized_H*(rest_of_tweets_TFIDF.T)
-pickle.dump(topics, open('test_topic_distribution_barc.pkl', 'wb'))
-H_ = topics
-W_ = (H[:,:-rows*cols]).T
-V_ = (rest_of_tweets_TFIDF).T
-print(H_.shape, W_.shape, V_.shape)
-(newH, somegrad, numberOfIterations) = _nls_subproblem(V_,W_,H_, 0.001,1000)
-print(numberOfIterations)
-W_testing= newH.T
-W_normalized = sklearn.preprocessing.normalize(W_testing)
-pickle.dump(W_normalized, open('test_distribution_barc_nls.pkl', 'wb'))
-print(linalg.norm((W_testing-topics.T), 'fro'))
+# import pickle
+# rows = 100
+# cols = 100
+# (W, H) = pickle.load(open('Location_NMF_100_topics_barc_WH.pkl','rb'))
+# rest_of_tweets_TFIDF  = pickle.load(open('rest_of_tweets_TFIDF_barc.pkl','rb'))
+# print(W.shape, H.shape)
+# Spatial_sample = pickle.load(open('Location_pandas_data_barc.pkl', 'rb'))
+# Topics = W.argmax(axis=1)
+# Spatial_sample["topics"] = Topics.tolist()
+# pickle.dump(Spatial_sample, open('Location_pandas_data_barc.pkl', 'wb'))
+#
+# rest_of_tweets_Data = pickle.load(open('rest_of_tweets_pandas_data_barc.pkl','rb'))
+# normalized_H = sklearn.preprocessing.normalize(H[:,:-rows*cols])
+# print(np.linalg.norm((normalized_H[0:2, :]), 'fro'))
+# print(normalized_H.shape,rest_of_tweets_TFIDF.shape)
+#
+# #normalized_tweets = sklearn.preprocessing.normalize(rest_of_tweets_TFIDF)
+#
+# topics = normalized_H*(rest_of_tweets_TFIDF.T)
+# pickle.dump(topics, open('test_topic_distribution_barc.pkl', 'wb'))
+# H_ = topics
+# W_ = (H[:,:-rows*cols]).T
+# V_ = (rest_of_tweets_TFIDF).T
+# print(H_.shape, W_.shape, V_.shape)
+# (newH, somegrad, numberOfIterations) = _nls_subproblem(V_,W_,H_, 0.001,1000)
+# print(numberOfIterations)
+# W_testing= newH.T
+# W_normalized = sklearn.preprocessing.normalize(W_testing)
+# pickle.dump(W_normalized, open('test_distribution_barc_nls.pkl', 'wb'))
+# print(linalg.norm((W_testing-topics.T), 'fro'))

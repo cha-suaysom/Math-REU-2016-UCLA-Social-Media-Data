@@ -10,7 +10,9 @@ import numpy as np
 import math
 from scipy.stats.mstats import mode
 import pandas as pd
-
+from _nls_test import _nls_subproblem
+rows = 100
+cols = 100
 (W, H) = pickle.load(open('Location_NMF_100_topics_barc_WH.pkl','rb'))
 rest_of_tweets_TFIDF  = pickle.load(open('rest_of_tweets_TFIDF_barc.pkl','rb'))
 print(W.shape, H.shape)
@@ -20,15 +22,22 @@ Spatial_sample["topics"] = Topics.tolist()
 pickle.dump(Spatial_sample, open('Location_pandas_data_barc.pkl', 'wb'))
 
 rest_of_tweets_Data = pickle.load(open('rest_of_tweets_pandas_data_barc.pkl','rb'))
-normalized_H = sklearn.preprocessing.normalize(H[:,:-10000])
+H_text = H[:,:-rows*cols]
+normalized_H = sklearn.preprocessing.normalize(H_text)
 print(np.linalg.norm((normalized_H[0:2, :]), 'fro'))
 print(normalized_H.shape,rest_of_tweets_TFIDF.shape)
 
-normalized_tweets = sklearn.preprocessing.normalize(rest_of_tweets_TFIDF)
 
-topics = normalized_H*(normalized_tweets.T)
-pickle.dump(topics, open('test_topic_ditribution.pkl', 'wb'))
+topics_guess = normalized_H*(rest_of_tweets_TFIDF.T) #estimates "W" assuming orthognality
+V_ = rest_of_tweets_TFIDF.T #V transpose
+W_ = H_text.T #H transpsoe
+H_ = topics_guess #W tranpose
+(topics, somegrad, numberOfIterations) = _nls_subproblem(V_,W_,H_, 0.001,1000)
+print("number of iteration for nls problem:",numberOfIterations)
 topics = topics.T
+topics = sklearn.preprocessing.normalize(topics)
+pickle.dump(topics, open('test_topic_ditribution_barc.pkl', 'wb'))
+
 B = (np.max(topics, axis = 1)>0.2)
 
 
@@ -37,10 +46,12 @@ print(len(Topic_list))
 print(len(rest_of_tweets_Data.index))
 rest_of_tweets_Data["topics"]= Topic_list
 pickle.dump(rest_of_tweets_Data, open('rest_of_tweets_pandas_data_barc.pkl','wb'))
-Topic_stats = pickle.load(open('topic_stats_pandas.pkl', 'rb'))
+Topic_stats = pickle.load(open('topic_stats_pandas_barc.pkl', 'rb'))
 onekmlist = []
 twokmlist = []
+testinglength= []
 selected_tweets_data = rest_of_tweets_Data[B]
+pickle.dump(selected_tweets_data, open('selected_tweets_pandas_data_barc.pkl','wb'))
 for T in range(0,100):
     subset= selected_tweets_data[selected_tweets_data["topics"]== T]
     xgrid = subset["xgrid"].tolist()
@@ -55,19 +66,22 @@ for T in range(0,100):
     twoKm = 0
     for i in range(0,length):
         Dis = math.sqrt((xgrid[i]-A[T][0])**2 + (ygrid[i] -A[T][1])**2)
-        if  Dis < 6:
+        if  Dis < 4:
             oneKm = oneKm + 1
-        if Dis < 11:
+        if Dis < 8:
             twoKm = twoKm+1
     onekmpct = (100 * oneKm / (length+0.001))
     twokmpct =(100 * twoKm / (length+0.001))
+    testinglength.append(length)
     print(T,length, "<1KM: ",onekmpct, "<2KM: ",twokmpct)
     onekmlist.append(onekmpct)
     twokmlist.append(twokmpct)
 print(len(Topic_stats.index))
 print(len(onekmlist))
+Topic_stats["testing length"] = testinglength
 Topic_stats["1KM"] = onekmlist
 Topic_stats["2KM"] = twokmlist
 
+
 sortedTopics = Topic_stats.sort_values(by= "MSD")
-print(sortedTopics.head(30))
+print(sortedTopics.head(60))
