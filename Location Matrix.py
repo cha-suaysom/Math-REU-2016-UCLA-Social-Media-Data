@@ -33,7 +33,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
 
     #####################LOCATION MATRIX ##############################
     def GenerateGrid(rows, cols, neighbor_weight):
-        #neighbor_weight = 0.5 ###first we create all of the location vectors
+        neighbor_weight = 0.5 ###first we create all of the location vectors
         nw = neighbor_weight
         vector_list = []
         for i in range(0,rows):
@@ -77,7 +77,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     Spatial["xgrid"] = XGRID
     Spatial["ygrid"] = YGRID
 
-    fraction = 0.5
+    fraction = 0.1
     length = len(Spatial.index)
     Spatial = Spatial.sample(frac = 1.0)
     Spatial_sample = Spatial.head(int(fraction*length))
@@ -85,7 +85,6 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     pickle.dump(rest_of_tweets_pandas, open('rest_of_tweets_pandas_data_barc.pkl', 'wb'))  # saves the rest of tweets for testing
     raw_text = Spatial["text"]
     coorlist = []
-    print("hi")
     for row in Spatial.itertuples():
         x = row[10]
         y = row[11]
@@ -95,18 +94,18 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     print(L_full.shape)
     pickle.dump(L_full, open('Location_matrix_full_barc.pkl', 'wb'))
     L = L_full[:int(fraction*length),:]
-    L_rand = L_full[:,:]
-    L_rand = sklearn.utils.shuffle(L_rand)
-    print(L_rand.shape)
-    L_rand = L_rand[(int((fraction*length))) :, :]
-
-    print(L_rand.shape)
-    #print(L.shape)
-    L = sps.csr_matrix(L)
-    L_rand = sps.csr_matrix(L_rand)
-    #print(L_rand)
-    #print(L)
-    L_test = sps.vstack((L , L_rand))
+    # L_rand = L_full[:,:]
+    # L_rand = sklearn.utils.shuffle(L_rand)
+    # print(L_rand.shape)
+    # L_rand = L_rand[(int((fraction*length))) :, :]
+    #
+    # print(L_rand.shape)
+    # #print(L.shape)
+    # L = sps.csr_matrix(L)
+    # L_rand = sps.csr_matrix(L_rand)
+    # #print(L_rand)
+    # #print(L)
+    # L_test = sps.vstack((L , L_rand))
 
 
 
@@ -194,7 +193,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
 
 
 ######## PYTHON NMF #############
-    topic_model = NMF(n_components=100, verbose=1, tol=0.005)  # Sure lets compress to 100 topics why not...
+    topic_model = NMF(n_components=100, verbose=1, tol=0.001)  # Sure lets compress to 100 topics why not...
 
     text_topic_model_W = topic_model.fit_transform(NMFLOC) # NMF's .transform() returns W by
     # default, but we can get H as follows:
