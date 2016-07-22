@@ -83,7 +83,7 @@ def LocationMatrix(name = 'barc', alpha = 0.5, number_of_topics = 100, training_
 
     fraction = training_fraction
     length = len(Spatial.index)
-    Spatial = Spatial.sample(frac = 1.0)
+    Spatial = Spatial.sample(frac = 1.0, random_state= 1)
     Spatial_sample = Spatial.head(int(fraction*length))
     rest_of_tweets_pandas = Spatial.tail(length- int(fraction*(length)))
     pickle.dump(rest_of_tweets_pandas, open('rest_of_tweets_pandas_data_'+name+'_'+str(training_fraction)+'training'+'_alpha'+str(alpha)+ '.pkl', 'wb'))  # saves the rest of tweets for testing
