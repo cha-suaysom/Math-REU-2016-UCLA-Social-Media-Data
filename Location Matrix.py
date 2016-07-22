@@ -1,34 +1,37 @@
-if __name__ == "__main__": # sort of like with MPI, we need this to do multiprocessing on windows
-    import pickle
-    from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
-    from sklearn.decomposition import NMF #, PCA, TruncatedSVD, LatentDirichletAllocation
-    import time
-    import re  # regex
-    import scipy.io as sio
-    import scipy.sparse as sps
-    import numpy as np
-    import math
-    import pandas as pd
-    import random
-    import sklearn.utils
-    from numpy import linalg
-
-#################DEFINE CONSTANT###################################
-    #Barcelona
-    rows = 100
-    cols = 100
-    LATITUDE_UPPER_BOUND = 41.390205 + 2
-    LATITUDE_LOWER_BOUND = 41.390205 -2
-    LONGITUDE_UPPER_BOUND= 2.154007 +0.5
-    LONGITUDE_LOWER_BOUND = 2.154007 -0.5
-
-    # #vancouver
-    # rows = 100 #26KM
-    # cols = 180#49KM
-    # LATITUDE_UPPER_BOUND = 49.2827 + 2
-    # LATITUDE_LOWER_BOUND = 49.2827 - 2
-    # LONGITUDE_UPPER_BOUND = -123.1207 + 2
-    # LONGITUDE_LOWER_BOUND = -123.1207 - 2
+import pickle
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from sklearn.decomposition import NMF #, PCA, TruncatedSVD, LatentDirichletAllocation
+import time
+import re  # regex
+import scipy.io as sio
+import scipy.sparse as sps
+import numpy as np
+import math
+import pandas as pd
+import random
+from copy import deepcopy
+import sklearn.utils
+from numpy import linalg
+def LocationMatrix(name = 'barc', alpha = 0.5, number_of_topics = 100, training_fraction = 0.5):
+    #################DEFINE CONSTANT###################################
+    alpha = round(alpha, 1)
+    training_fraction = round(training_fraction, 1)
+    if(name == 'barc'):
+        #Barcelona
+        rows = 100
+        cols = 100
+        LATITUDE_UPPER_BOUND = 41.390205 + 2
+        LATITUDE_LOWER_BOUND = 41.390205 -2
+        LONGITUDE_UPPER_BOUND= 2.154007 +0.5
+        LONGITUDE_LOWER_BOUND = 2.154007 -0.5
+    if (name == 'vanc'):
+        #vancouver
+        rows = 100 #26KM
+        cols = 180#49KM
+        LATITUDE_UPPER_BOUND = 49.2827 + 2
+        LATITUDE_LOWER_BOUND = 49.2827 - 2
+        LONGITUDE_UPPER_BOUND = -123.1207 + 2
+        LONGITUDE_LOWER_BOUND = -123.1207 - 2
 
 
     #####################LOCATION MATRIX ##############################
@@ -51,7 +54,8 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
         return vector_list
     #print(vector_list[0])
     vector_list = GenerateGrid(rows, cols, 0.5)
-    Spatial = pickle.load(open('pandas_data_barc.pkl','rb'))
+
+    Spatial = pickle.load(open('pandas_data_'+str(name)+'.pkl','rb'))
     Spatial = Spatial[Spatial["gps_precision"] == 10.0]
     Spatial = Spatial[Spatial["latitude"] < LATITUDE_UPPER_BOUND]
     Spatial = Spatial[Spatial["latitude"] > LATITUDE_LOWER_BOUND]
@@ -63,7 +67,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     minlong = Spatial["longitude"].min()-10**(-12)
     print(minlat, maxlat)
     print(minlong, maxlong)
-    #Spatial = Spatial.sample(frac=0.03)  ###Sample traning data
+    #Spatial = Spatial.sample(frac=0.003)  ###Sample
     raw_text = Spatial["text"]
     XGRID  = []
     YGRID = []
@@ -77,12 +81,12 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     Spatial["xgrid"] = XGRID
     Spatial["ygrid"] = YGRID
 
-    fraction = 0.1
+    fraction = training_fraction
     length = len(Spatial.index)
     Spatial = Spatial.sample(frac = 1.0)
     Spatial_sample = Spatial.head(int(fraction*length))
     rest_of_tweets_pandas = Spatial.tail(length- int(fraction*(length)))
-    pickle.dump(rest_of_tweets_pandas, open('rest_of_tweets_pandas_data_barc.pkl', 'wb'))  # saves the rest of tweets for testing
+    pickle.dump(rest_of_tweets_pandas, open('rest_of_tweets_pandas_data_'+name+'_'+str(training_fraction)+'training'+'_alpha'+str(alpha)+ '.pkl', 'wb'))  # saves the rest of tweets for testing
     raw_text = Spatial["text"]
     coorlist = []
     for row in Spatial.itertuples():
@@ -92,7 +96,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     length = len(coorlist)
     L_full = sps.vstack(vector_list[coorlist[i]] for i in range(0,length)) ### loops through all the tweets and adds the rows, L is created once.
     print(L_full.shape)
-    pickle.dump(L_full, open('Location_matrix_full_barc.pkl', 'wb'))
+    #pickle.dump(L_full, open('Location_matrix_full_vanc.pkl', 'wb'))
     L = L_full[:int(fraction*length),:]
     # L_rand = L_full[:,:]
     # L_rand = sklearn.utils.shuffle(L_rand)
@@ -163,7 +167,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     #print(rest_of_tweets.shape)
     #print(text_tf_idf.shape, rest_of_tweets.shape)
 
-    pickle.dump(rest_of_tweets, open('rest_of_tweets_TFIDF_barc.pkl', 'wb'))#saves the rest of tweets for testing
+    pickle.dump(rest_of_tweets, open('rest_of_tweets_TFIDF_'+name+'_'+str(training_fraction)+'training'+'_alpha'+str(alpha)+ '.pkl', 'wb'))#saves the rest of tweets for testing
 
 
 ############ CONCATENATING LOCATION AND TFIDF MATRICES ##############
@@ -171,8 +175,8 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     text_norm = sps.linalg.norm(text_tf_idf, 'fro')
     print(location_norm, text_norm, location_norm/text_norm)
 
-    alpha = 0.5*(text_norm/location_norm) # Weight of location matrix, normalized so that text and location parts have the same frobinous norm
-    L = alpha*L
+    adjustedAlpha = alpha*(text_norm/location_norm) # Weight of location matrix, normalized so that text and location parts have the same frobinous norm
+    L = adjustedAlpha*L
 
     NMFLOC = sps.hstack((text_tf_idf, L))
     NMFLOC = NMFLOC.tocsr()
@@ -193,7 +197,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
 
 
 ######## PYTHON NMF #############
-    topic_model = NMF(n_components=100, verbose=1, tol=0.001)  # Sure lets compress to 100 topics why not...
+    topic_model = NMF(n_components=number_of_topics, verbose=1, tol=0.001)  # Sure lets compress to 100 topics why not...
 
     text_topic_model_W = topic_model.fit_transform(NMFLOC) # NMF's .transform() returns W by
     # default, but we can get H as follows:
@@ -205,10 +209,81 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     # Maybe. We might need to to transpose this...
 
     text_topic_model_WH = (text_topic_model_W,text_topic_model_H)
-    pickle.dump(Spatial_sample, open('Location_pandas_data_barc.pkl', 'wb'))
 
-    pickle.dump(tf_idf.get_feature_names(), open('TF_IDF_feature_names_barc.pkl', 'wb'))
-    pickle.dump(text_topic_model_WH, open('location_NMF_100_topics_barc_WH.pkl','wb'), protocol=4) # Save it to
+
+    pickle.dump(tf_idf.get_feature_names(), open('TF_IDF_feature_names_'+name+'_'+str(training_fraction)+'training'+'_alpha'+str(alpha)+ '.pkl', 'wb'))
+    pickle.dump(text_topic_model_WH, open('location_NMF_'+str(number_of_topics)+'_topics_'+name+'_'+str(training_fraction)+'training'+'_alpha'+str(alpha)+ '.pkl','wb'), protocol=4) # Save it to
     #pickle.dump(topic_model, open('NMF_vanc.pkl','wb'), protocol=4)
     # disk so we don't have to keep recalculating it later
 
+#Projection of tweets into the training topics
+
+    Topics = text_topic_model_W.argmax(axis=1)
+
+
+    pickle.dump(Spatial_sample, open('Location_pandas_data_' + name + '_' + str(training_fraction) + 'training' + '_alpha' + str(alpha) + '.pkl','wb'))
+    Sps = pickle.load(open(
+        'Location_pandas_data_' + name + '_' + str(training_fraction) + 'training' + '_alpha' + str(alpha) + '.pkl',
+        'rb'))
+    Sps["topics"] = Topics.tolist()
+    pickle.dump(Sps, open(
+        'Location_pandas_data_' + name + '_' + str(training_fraction) + 'training' + '_alpha' + str(alpha) + '.pkl',
+        'wb'))
+
+    H_text = text_topic_model_H[:, :-rows * cols]
+    normalized_H = sklearn.preprocessing.normalize(H_text)
+    print(np.linalg.norm((normalized_H[0:2, :]), 'fro'))
+    print(normalized_H.shape, rest_of_tweets.shape)
+
+    topics_guess = (normalized_H * (rest_of_tweets.T)).T  # estimates "W" assuming orthognality
+
+    # calculates the topics using NLS problems
+    # V_ = rest_of_tweets_TFIDF.T #V transpose
+    # W_ = H_text.T #H transpsoe
+    # H_ = topics_guess #W tranpose
+    # (topics, somegrad, numberOfIterations) = _nls_subproblem(V_,W_,H_, 0.001,1000)
+    # print("number of iteration for nls problem:",numberOfIterations)
+
+
+    # essentially NLS problem, but under the NMF 'hood'
+    NLS_solver = NMF(n_components=number_of_topics, init='custom', verbose=1.0, tol=0.005,
+                      max_iter=1)  # Sure lets compress to 100 topics why not...
+    NMF.nls_max_iter = 20
+    # W_NMF = deepcopy(topics_guess)
+    # topics = topic_model.fit_transform(rest_of_tweets_TFIDF, W =W_NMF.T, H = normalized_H)
+
+
+
+    length = (topics_guess.shape)[0]
+    #to reduce the strain on our machine we solve the NLS in blocks
+    for i in range(0, 10):
+        print(i)
+        topics_guess_piece = topics_guess[(i * length) // 10:((i + 1) * length) // 10, :]
+        rest_of_tweets_piece = rest_of_tweets[(i * length) // 10:((i + 1) * length) // 10, :]
+        W_NMF = deepcopy(topics_guess_piece)
+        topics_piece = NLS_solver.fit_transform(rest_of_tweets_piece, W=W_NMF, H=normalized_H)
+        print(str(i) + ".5")
+        if i == 0:
+            topics = topics_piece
+        else:
+            topics = np.vstack((topics, topics_piece))
+    print(topics.shape)
+    pickle.dump(topics, open('test_topic_distribution_'+ name + '_' + str(training_fraction) + 'training' + '_alpha' + str(alpha) + '.pkl', 'wb'))
+    distance = linalg.norm((topics - topics_guess), 'fro') / (linalg.norm(topics_guess, 'fro'))
+    print(distance)
+    topics = sklearn.preprocessing.normalize(topics)
+    Topic_list = (np.argmax(topics, axis=1)).tolist()
+    print(len(Topic_list))
+    print(len(rest_of_tweets_pandas.index))
+
+    pickle.dump(rest_of_tweets_pandas, open(
+        'rest_of_tweets_pandas_data_' + name + '_' + str(training_fraction) + 'training' + '_alpha' + str(
+            alpha) + '.pkl', 'wb'))
+    rot = pickle.load(open(
+        'rest_of_tweets_pandas_data_' + name + '_' + str(training_fraction) + 'training' + '_alpha' + str(
+            alpha) + '.pkl', 'rb'))
+    rot["topics"] = Topic_list
+    pickle.dump(rot, open(
+        'rest_of_tweets_pandas_data_' + name + '_' + str(training_fraction) + 'training' + '_alpha' + str(
+            alpha) + '.pkl', 'wb'))
+#LocationMatrix()
